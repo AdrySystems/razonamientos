@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razonamiento Lógico Matemático • 2° Secundaria • Uruapan, Michoacán</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Lexend', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'bounce-subtle': 'bounceSubtle 1.5s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(12px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.02)' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-3px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --bg-glass: rgba(255, 255, 255, 0.94);
+            --border-main: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-muted: #475569;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0b1120;
+            --bg-card: #131c31;
+            --bg-card-hover: #1e293b;
+            --bg-glass: rgba(19, 28, 49, 0.94);
+            --border-main: #334155;
+            --border-subtle: #1e293b;
+            --text-heading: #f8fafc;
+            --text-body: #e2e8f0;
+            --text-muted: #cbd5e1;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 40px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Lexend', sans-serif;
+            color: var(--text-heading);
+        }
+
+        .academic-glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border-color: var(--border-main);
+        }
+
+        .academic-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .academic-card:hover {
+            background-color: var(--bg-card-hover);
+            border-color: #3b82f6;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px) scale(1.015);
+        }
+
+        .academic-card:active {
+            transform: translateY(-2px) scale(0.985);
+        }
+
+        body.projection-mode {
+            font-size: 1.2rem !important;
+            line-height: 1.7 !important;
+        }
+
+        body.projection-mode .academic-card {
+            border-width: 2.5px !important;
+            border-color: #3b82f6 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-page);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <div id="projector-indicator" class="hidden bg-blue-900 text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 shadow-inner z-50">
+        <i class="fa-solid fa-display text-blue-300 animate-pulse"></i>
+        <span>MODO PROYECTOR ACTIVO — Optimizado para el Aula de Clases</span>
+        <button onclick="toggleProjectionMode()" class="ml-4 underline hover:text-blue-200 text-xs font-semibold cursor-pointer">Desactivar</button>
+    </div>
+
+    <header class="sticky top-0 z-40 academic-glass border-b transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3.5 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">URUAPAN<span class="text-blue-600 dark:text-blue-400">MATH</span></span>
+                        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 px-2.5 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700/80 font-extrabold">
+                            2° Secundaria
+                        </span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 text-[11px] mt-0.5">
+                        <i class="fa-solid fa-chalkboard-user text-blue-600 dark:text-blue-400"></i>
+                        <span class="text-slate-600 dark:text-slate-300 font-medium">Profesor:</span>
+                        <strong class="text-slate-900 dark:text-slate-100 font-bold">Adrian Cipriano Lara</strong>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <a href="#temas-grid" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Retos Cotidianos</a>
+                <a href="#evaluacion" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Quiz Exprés</a>
+            </nav>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="projection-btn" onclick="toggleProjectionMode()" class="px-3.5 py-2 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer" title="Activar Modo Proyector">
+                    <i class="fa-solid fa-display text-blue-600 dark:text-blue-400"></i>
+                    <span class="hidden md:inline">Proyector</span>
+                </button>
+
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 transition-all shadow-sm focus:outline-none cursor-pointer" title="Cambiar Tema">
+                    <i id="theme-icon" class="fa-solid fa-sun text-base"></i>
+                </button>
+
+                <div class="flex items-center gap-2 bg-blue-100/90 dark:bg-blue-950/90 border border-blue-300 dark:border-blue-700/80 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm">
+                    <i class="fa-solid fa-bolt text-amber-500 dark:text-amber-400"></i>
+                    <span id="nav-xp" class="text-blue-900 dark:text-blue-200">0 XP</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 mb-6 shadow-2xl relative overflow-hidden border border-indigo-800/40">
+            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs bg-indigo-500/30 text-indigo-100 font-extrabold px-3.5 py-1 rounded-full border border-indigo-400/40">
+                            2° de Secundaria • Razonamiento Lógico
+                        </span>
+                        <span class="text-xs bg-amber-400 text-slate-950 font-extrabold px-3.5 py-1 rounded-full shadow-sm">
+                            Uruapan, Michoacán
+                        </span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white leading-tight">
+                        Razonamiento Lógico con Situaciones Reales
+                    </h1>
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed">
+                        Retos prácticos diseñados para el segundo grado de secundaria, adaptados a situaciones de nuestro entorno. Fortalece tus habilidades analíticas con explicaciones detalladas y diagramas visuales paso a paso.
+                    </p>
+                </div>
+
+                <!-- Tarjeta Profesor Titular Premium y Destacada -->
+                <div class="bg-gradient-to-br from-indigo-900/95 via-blue-950 to-slate-900/95 backdrop-blur-2xl border-2 border-indigo-400/60 p-6 rounded-3xl flex items-center gap-5 self-stretch md:self-auto shadow-2xl shadow-indigo-900/50 relative group transition-transform hover:scale-105">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md border border-amber-200">
+                        <i class="fa-solid fa-award mr-1"></i> Docente Titular
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-blue-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-indigo-500/40 shrink-0 group-hover:rotate-6 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="text-xs space-y-1.5">
+                        <span class="text-indigo-300 block text-[11px] font-extrabold uppercase tracking-widest">Matemáticas 2° Secundaria</span>
+                        <strong class="text-white text-lg sm:text-xl font-display font-black block tracking-tight">Adrian Cipriano Lara</strong>
+                        <span class="inline-flex items-center gap-1.5 text-slate-300 text-xs font-semibold pt-0.5">
+                            <i class="fa-solid fa-location-dot text-amber-400"></i> Uruapan, Michoacán
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="temas-grid" class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="mb-8">
+            <span class="bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700/80 text-xs px-3.5 py-1 rounded-full font-bold uppercase tracking-wider inline-block mb-2">
+                <i class="fa-solid fa-bullseye mr-1.5"></i> Retos de 2° Grado
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                Elige un Reto, Analiza y Comprueba
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">
+                Haz clic en cualquier tarjeta para explorar el reto interactivo, su diagrama visual y la comprobación de resultados.
+            </p>
+        </div>
+
+        <div id="topics-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <section id="evaluacion" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="academic-card rounded-3xl p-6 sm:p-10 max-w-4xl mx-auto shadow-xl">
+            <div class="text-center mb-8">
+                <span class="text-indigo-800 dark:text-indigo-300 font-extrabold text-xs uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/90 px-3.5 py-1 rounded-full border border-indigo-300 dark:border-indigo-700/80 inline-block mb-2">Evaluación Formativa • 2° Secundaria</span>
+                <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                    Quiz Exprés de Razonamiento 2°
+                </h2>
+            </div>
+
+            <div id="quiz-screen-start" class="text-center py-6">
+                <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-indigo-300 dark:border-indigo-800 shadow-md">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">¿Listo para demostrar tus conocimientos?</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-md mx-auto mb-6 font-medium">
+                    Responde 5 preguntas aleatorias del temario de segundo grado y acumula puntos XP.
+                </p>
+                <button id="btn-start-quiz" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 cursor-pointer">
+                    <i class="fa-solid fa-play mr-2"></i> Iniciar Quiz de 2° Grado
+                </button>
+            </div>
+
+            <div id="quiz-screen-active" class="hidden">
+                <div class="flex justify-between items-center mb-6 text-xs font-bold text-slate-700 dark:text-slate-200 border-b pb-3 border-slate-300 dark:border-slate-700">
+                    <span id="quiz-progress-text" class="text-indigo-800 dark:text-indigo-300">Pregunta 1 de 5</span>
+                    <span id="quiz-streak-text" class="text-amber-600 dark:text-amber-400"><i class="fa-solid fa-fire mr-1"></i> Racha: 0</span>
+                </div>
+
+                <div class="mb-6 space-y-4">
+                    <h4 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-relaxed">¿Pregunta?</h4>
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <!-- JS Populated -->
+                    </div>
+                    <button id="btn-check-quiz" class="hidden mt-6 w-full sm:w-auto mx-auto px-6 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-xs sm:text-sm cursor-not-allowed transition-all block">
+                        Selecciona una respuesta
+                    </button>
+                </div>
+
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl mb-4 text-xs sm:text-sm border font-medium animate-fade-in">
+                    <!-- JS Populated -->
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="btn-next-quiz" class="hidden px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs sm:text-sm transition-all shadow-md cursor-pointer animate-fade-in">
+                        Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-300 dark:border-slate-800 py-8 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2.5 mt-12 bg-slate-100/50 dark:bg-slate-900/50 font-medium">
+        <p>UruapanMath • Razonamiento Lógico-Matemático para 2° de Secundaria</p>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs shadow-sm">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600 dark:text-indigo-400"></i>
+            <span>Profesor Titular: <strong class="text-slate-900 dark:text-white font-bold">Adrian Cipriano Lara</strong></span>
+        </div>
+    </footer>
+
+    <div id="rule-modal" class="fixed inset-0 z-[100] hidden bg-slate-950/85 backdrop-blur-md overflow-y-auto transition-opacity duration-300 text-slate-900 dark:text-slate-100">
+        <div class="min-h-screen px-4 py-6 sm:px-8 flex flex-col justify-between max-w-4xl mx-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-300 dark:border-slate-700 mb-6">
+                <button onclick="closeFullscreenModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer border border-slate-300 dark:border-slate-600">
+                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Volver</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="navigateModal(-1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span id="modal-counter-badge" class="text-xs font-bold font-mono text-indigo-800 dark:text-indigo-300 px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl shadow-sm">
+                        Contenido 1
+                    </span>
+                    <button onclick="navigateModal(1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-body-content" class="flex-grow">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-300 dark:border-slate-700 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
+                <span>Presiona <kbd class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-800 dark:text-slate-200 font-mono">ESC</kbd> para salir</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+            playTone(freq, type = 'sine', duration = 0.1) {
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') {
+                        this.ctx.resume();
+                    }
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            }
+            success() {
+                this.playTone(587.33, 'triangle', 0.15);
+                setTimeout(() => this.playTone(880, 'triangle', 0.25), 120);
+            }
+            error() {
+                this.playTone(220, 'sawtooth', 0.2);
+                setTimeout(() => this.playTone(164.81, 'sawtooth', 0.3), 150);
+            }
+        }
+        const sfx = new SoundFX();
+
+        let totalXP = parseInt(localStorage.getItem('uruapanmath_2do_xp') || '0');
+        function addXP(amount) {
+            totalXP += amount;
+            localStorage.setItem('uruapanmath_2do_xp', totalXP);
+            document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+            confetti({ particleCount: 35, spread: 70, origin: { y: 0.8 } });
+        }
+
+        let isProjectionMode = false;
+        function toggleProjectionMode() {
+            isProjectionMode = !isProjectionMode;
+            document.body.classList.toggle('projection-mode', isProjectionMode);
+            document.getElementById('projector-indicator').classList.toggle('hidden', !isProjectionMode);
+            sfx.playTone(isProjectionMode ? 660 : 440, 'sine', 0.1);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', current);
+            localStorage.setItem('uruapanmath_2do_theme', current);
+            document.getElementById('theme-icon').className = current === 'light' ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+            sfx.playTone(520, 'sine', 0.05);
+        }
+
+        // Datos oficiales adaptados para 2° de Secundaria con los 13 temas solicitados
+        const topicsData = [
+            {
+                id: 1,
+                title: "1.1 Criterios de divisibilidad",
+                subtitles: "Extensión del significado de las operaciones",
+                icon: "fa-cubes",
+                color: "rose",
+                context: "En una cooperativa agrícola empacan aguacates en cajas. Tienen 1,350 piezas y necesitan saber exactamente si se pueden empaquetar en cajas de 3, 5 y 9 piezas sin que sobre ninguna.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Criterios de Divisibilidad</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono font-bold">
+                            <div class="p-2.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300">Entre 3: Suma dg. (1+3+5+0=9) sí</div>
+                            <div class="p-2.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300">Entre 5: Termina en 0 o 5 sí</div>
+                            <div class="p-2.5 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300">Entre 9: Suma dg. = 9 sí</div>
+                        </div>
+                    </div>
+                `,
+                question: "¿Es 1,350 divisible simultáneamente entre 3, 5 y 9?",
+                options: ["Sí, cumple los tres criterios", "Solo entre 5 y 9", "Solo entre 3 y 5", "Ninguno de los tres"],
+                correctAnswer: 0,
+                explanation: "Termina en 0 (divisible entre 5). La suma de sus dígitos es 1+3+5+0 = 9 (divisible entre 3 y entre 9). Por lo tanto, es divisible por los tres."
+            },
+            {
+                id: 2,
+                title: "1.2 Máximo común divisor y mínimo común múltiplo",
+                subtitles: "Extensión del significado de las operaciones",
+                icon: "fa-faucet-drip",
+                color: "cyan",
+                context: "Dos válvulas automáticas de riego se activan sincronizadas: la primera cada 12 minutos y la segunda cada 18 minutos. Si acaban de coincidir ahora mismo...",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Mínimo Común Múltiplo (m.c.m.)</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-950 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            Múltiplos de 12: 12, 24, 36, 48...<br>
+                            Múltiplos de 18: 18, 36, 54...<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">m.c.m.(12, 18) = 36 minutos</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿En cuántos minutos volverán a coincidir exactamente?",
+                options: ["24 minutos", "36 minutos", "54 minutos", "72 minutos"],
+                correctAnswer: 1,
+                explanation: "Buscamos el mínimo común múltiplo (m.c.m.) de 12 y 18. Descomponiendo en factores primos o listando múltiplos, encontramos que coinciden cada 36 minutos."
+            },
+            {
+                id: 3,
+                title: "1.3 Potencias y raíz cuadrada",
+                subtitles: "Extensión del significado de las operaciones",
+                icon: "fa-vector-square",
+                color: "amber",
+                context: "Un terreno de cultivo tiene forma estrictamente cuadrada y su área total mide exactamente 529 metros cuadrados.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Cálculo de Raíz Cuadrada</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-sm">
+                            Área = Lado² = 529 m²<br>
+                            Lado = √529 = <span class="text-emerald-600 dark:text-emerald-400 font-black">23 metros</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la longitud exacta de cada uno de los lados del terreno?",
+                options: ["21 metros", "23 metros", "25 metros", "27 metros"],
+                correctAnswer: 1,
+                explanation: "Para hallar el lado de un cuadrado conociendo su área, calculamos la raíz cuadrada. Sabemos que 23 x 23 = 529, por lo que la raíz cuadrada de 529 es 23."
+            },
+            {
+                id: 4,
+                title: "2.1 Sucesión con progresión cuadrática",
+                subtitles: "Regularidades y patrones",
+                icon: "fa-layer-group",
+                color: "emerald",
+                context: "Analiza la siguiente sucesión numérica de segundo grado (cuadrática): 3, 8, 15, 24, ... Halla el patrón de diferencias.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Diferencias Sucesivas</div>
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300 font-mono font-bold text-xs space-y-1">
+                            <div>Términos: 3, &nbsp;&nbsp; 8, &nbsp;&nbsp; 15, &nbsp;&nbsp; 24, &nbsp;&nbsp; <span class="text-emerald-600 font-bold">35</span></div>
+                            <div>1ª Diferencia: &nbsp;&nbsp; 5, &nbsp;&nbsp; 7, &nbsp;&nbsp; 9, &nbsp;&nbsp; <span class="text-blue-600 font-bold">11</span></div>
+                            <div>2ª Diferencia (Constante): &nbsp;&nbsp; 2, &nbsp;&nbsp; 2</div>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué número continúa exactamente en la sucesión (5° término)?",
+                options: ["33", "35", "36", "40"],
+                correctAnswer: 1,
+                explanation: "Las diferencias entre términos consecutivos son 5, 7, 9... La segunda diferencia es constante (+2). Por tanto, la siguiente diferencia es 9 + 2 = 11. Sumando 24 + 11 obtenemos 35."
+            },
+            {
+                id: 5,
+                title: "3.1 Expresiones algebraicas de segundo grado equivalentes",
+                subtitles: "Introducción al álgebra",
+                icon: "fa-table-cells-large",
+                color: "orange",
+                context: "Un terreno rectangular se divide en secciones. Su área total se puede expresar en su forma factorizada como 3(x + 4)². ¿Cuál es su desarrollo algebraico equivalente?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Desarrollo Algebraico</div>
+                        <div class="p-3 bg-orange-50 dark:bg-orange-950/80 text-orange-950 dark:text-orange-200 rounded-xl border border-orange-300 font-mono font-bold text-xs">
+                            3(x + 4)² = 3(x² + 8x + 16)<br>
+                            = <span class="text-emerald-600 dark:text-emerald-400 font-bold">3x² + 24x + 48</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la expresión cuadrática equivalente desarrollada?",
+                options: ["3x² + 12x + 16", "3x² + 24x + 48", "3x² + 8x + 16", "9x² + 24x + 48"],
+                correctAnswer: 1,
+                explanation: "Desarrollamos el binomio al cuadrado: (x+4)² = x² + 8x + 16. Al multiplicar todo por 3 obtenemos: 3(x²) + 3(8x) + 3(16) = 3x² + 24x + 48."
+            },
+            {
+                id: 6,
+                title: "3.2 Propiedades de potencias con exponente entero",
+                subtitles: "Introducción al álgebra",
+                icon: "fa-superscript",
+                color: "fuchsia",
+                context: "Simplifica la siguiente operación con potencias utilizando las leyes de los exponentes con exponente entero: (5³)⁴ ÷ (5²)⁵",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Leyes de Potencias</div>
+                        <div class="p-3 bg-fuchsia-50 dark:bg-fuchsia-950/80 text-fuchsia-950 dark:text-fuchsia-200 rounded-xl border border-fuchsia-300 font-mono font-bold text-xs">
+                            (5³)⁴ = 5¹²<br>
+                            (5²)⁵ = 5¹⁰<br>
+                            5¹² ÷ 5¹⁰ = 5¹²⁻¹⁰ = <span class="text-emerald-600 dark:text-emerald-400 font-bold">5² = 25</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el resultado numérico simplificado de la expresión?",
+                options: ["5", "25", "125", "625"],
+                correctAnswer: 1,
+                explanation: "Aplicamos potencia de una potencia (se multiplican exponentes: 3x4=12 y 2x5=10). Queda 5¹² / 5¹⁰. En división de la misma base, los exponentes se restan: 12 - 10 = 2. Queda 5² = 25."
+            },
+            {
+                id: 7,
+                title: "3.3 Desigualdades",
+                subtitles: "Introducción al álgebra",
+                icon: "fa-scale-unbalanced",
+                color: "sky",
+                context: "Tienes un presupuesto máximo de $500 pesos. Cada kilo de clavos cuesta $45 pesos y tienes un gasto fijo de envío de $50 pesos. ¿Cuántos kilos (x) puedes comprar?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Desigualdad Lineal</div>
+                        <div class="p-3 bg-sky-50 dark:bg-sky-950/80 text-sky-950 dark:text-sky-200 rounded-xl border border-sky-300 font-mono font-bold text-xs">
+                            45x + 50 ≤ 500<br>
+                            45x ≤ 450<br>
+                            x ≤ <span class="text-emerald-600 dark:text-emerald-400 font-bold">10 kilos</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el número máximo de kilos enteros que puedes comprar?",
+                options: ["8 kilos", "9 kilos", "10 kilos", "11 kilos"],
+                correctAnswer: 2,
+                explanation: "Planteamos la inecuación: 45x + 50 <= 500. Restamos 50 a ambos lados: 45x <= 450. Dividimos entre 45: x <= 10. El máximo número entero es 10."
+            },
+            {
+                id: 8,
+                title: "4.1 Sistemas de ecuaciones 2x2: método gráfico",
+                subtitles: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-chart-area",
+                color: "indigo",
+                context: "Al representar gráficamente dos rectas correspondientes a un sistema 2x2 en el plano cartesiano, las líneas se cruzan exactamente en el punto (3, 4).",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Método Gráfico 2x2</div>
+                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-200 rounded-xl border border-indigo-300 font-mono font-bold text-xs">
+                            Punto de intersección de las dos rectas:<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">x = 3, y = 4 (Solución única)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué representa el punto de intersección de las dos rectas en el método gráfico?",
+                options: ["La solución única del sistema", "Que el sistema no tiene solución", "Infinitas soluciones", "El área bajo la curva"],
+                correctAnswer: 0,
+                explanation: "En el método gráfico, el punto donde se intersectan las dos rectas corresponde a los valores de x e y que satisfacen ambas ecuaciones simultáneamente (la solución del sistema)."
+            },
+            {
+                id: 9,
+                title: "4.2 Sistemas de ecuaciones 2x2: métodos algebraicos",
+                subtitles: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-code-merge",
+                color: "blue",
+                context: "En una frutería, 2 kg de aguacate y 3 kg de limón cuestan $160 pesos. Además, 4 kg de aguacate y 1 kg de limón cuestan $180 pesos. ¿Cuánto cuesta cada kilo de aguacate (x)?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Métodos Algebraicos 2x2</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-950 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            1) 2x + 3y = 160<br>
+                            2) 4x + y = 180<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Solución: Aguacate (x) = $40, Limón (y) = $20</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el precio por kilo del aguacate (x) usando métodos algebraicos?",
+                options: ["$30", "$35", "$40", "$50"],
+                correctAnswer: 2,
+                explanation: "Resolviendo por suma/resta o sustitución: De la ecuación 2 despejamos y = 180 - 4x. Sustituimos en 1: 2x + 3(180 - 4x) = 160 => -10x = -380 => x = $40 el kilo de aguacate."
+            },
+            {
+                id: 10,
+                title: "5.1 Proporcionalidad directa e inversa",
+                subtitles: "Funciones",
+                icon: "fa-users-gear",
+                color: "teal",
+                context: "Si 6 albañiles tardan 12 días en construir una barda perimetral, ¿cuántos días tardarán 9 albañiles trabajando al mismo ritmo?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Proporcionalidad Inversa</div>
+                        <div class="p-3 bg-teal-50 dark:bg-teal-950/80 text-teal-950 dark:text-teal-200 rounded-xl border border-teal-300 font-mono font-bold text-xs">
+                            Más trabajadores $\implies$ Menos días (Inversa)<br>
+                            6 albañiles × 12 días = 72 total-días<br>
+                            72 ÷ 9 albañiles = <span class="text-emerald-600 dark:text-emerald-400 font-bold">8 días</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos días tardarán los 9 albañiles?",
+                options: ["6 días", "8 días", "9 días", "10 días"],
+                correctAnswer: 1,
+                explanation: "Es una relación inversamente proporcional (a mayor personal, menor tiempo). Multiplicamos las magnitudes constantes: 6 * 12 = 72. Dividimos entre el nuevo personal: 72 / 9 = 8 días."
+            },
+            {
+                id: 11,
+                title: "6.1 Rectas y ángulos",
+                subtitles: "Rectas y ángulos",
+                icon: "fa-compass-drafting",
+                color: "violet",
+                context: "Dos vigas metálicas se cortan formando ángulos suplementarios. Si uno de los ángulos mide 115°, ¿cuánto mide su ángulo adyacente suplementario?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Ángulos Suplementarios</div>
+                        <div class="p-3 bg-violet-50 dark:bg-violet-950/80 text-violet-950 dark:text-violet-200 rounded-xl border border-violet-300 font-mono font-bold text-xs">
+                            Ángulos suplementarios suman 180°<br>
+                            180° - 115° = <span class="text-emerald-600 dark:text-emerald-400 font-bold">65°</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la medida del ángulo suplementario?",
+                options: ["55°", "65°", "75°", "85°"],
+                correctAnswer: 1,
+                explanation: "Dos ángulos son suplementarios cuando la suma de sus medidas es exactamente 180°. Restamos: 180° - 115° = 65°."
+            },
+            {
+                id: 12,
+                title: "7.1 Construcción de polígonos",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-draw-polygon",
+                color: "pink",
+                context: "Estudias la construcción geométrica de un polígono regular cuyo ángulo central mide 60°. ¿De qué polígono regular se trata?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Ángulo Central de Polígonos</div>
+                        <div class="p-3 bg-pink-50 dark:bg-pink-950/80 text-pink-950 dark:text-pink-200 rounded-xl border border-pink-300 font-mono font-bold text-xs">
+                            Número de lados (n) = 360° ÷ Ángulo central<br>
+                            n = 360° ÷ 60° = <span class="text-emerald-600 dark:text-emerald-400 font-bold">6 lados (Hexágono)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos lados tiene el polígono regular con ángulo central de 60°?",
+                options: ["5 lados (Pentágono)", "6 lados (Hexágono)", "8 lados (Octágono)", "10 lados (Decágono)"],
+                correctAnswer: 1,
+                explanation: "El número de lados de un polígono regular se calcula dividiendo 360° entre la medida de su ángulo central: 360° / 60° = 6 lados (un hexágono regular)."
+            },
+            {
+                id: 13,
+                title: "7.2 Teselados",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-shapes",
+                color: "lime",
+                context: "Estudias un teselado geométrico regular para pavimentos. ¿Cuál es el polígono regular con el que se puede formar un teselado perfecto de 360° en un vértice cuyos ángulos miden 120°?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Teselados Regulares</div>
+                        <div class="p-3 bg-lime-50 dark:bg-lime-950/80 text-lime-950 dark:text-lime-200 rounded-xl border border-lime-300 font-mono font-bold text-xs">
+                            Ángulo interno = 120°<br>
+                            360° ÷ 120° = 3 piezas exactas por vértice<br>
+                            Polígono: <span class="text-emerald-600 dark:text-emerald-400 font-bold">Hexágono regular</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué polígono regular tiene ángulos internos de 120° y forma teselado?",
+                options: ["Triángulo equilátero", "Cuadrado", "Hexágono regular", "Pentágono regular"],
+                correctAnswer: 2,
+                explanation: "El hexágono regular tiene ángulos internos de 120°. Al juntar 3 hexágonos en un vértice, 3 * 120° = 360°, cubriendo todo el plano sin dejar huecos."
+            },
+            {
+                id: 14,
+                title: "8.1 Circunferencia y círculo",
+                subtitles: "Circunferencia, círculo y esfera",
+                icon: "fa-globe",
+                color: "amber",
+                context: "Una pista circular tiene un diámetro de 20 metros. Calcula su longitud (perímetro de la circunferencia) usando π ≈ 3.1416.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Longitud de la Circunferencia</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-xs">
+                            C = π × d = 3.1416 × 20 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">62.83 metros</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la longitud de la circunferencia de 20 m de diámetro?",
+                options: ["31.42 m", "62.83 m", "125.66 m", "314.16 m"],
+                correctAnswer: 1,
+                explanation: "La fórmula de la longitud de la circunferencia es C = pi * d. Al multiplicar 3.1416 * 20 obtenemos 62.83 metros."
+            },
+            {
+                id: 15,
+                title: "9.1 Múltiplos y submúltiplos de unidades del Sistema Internacional",
+                subtitles: "Medición y cálculo en diferentes contextos",
+                icon: "fa-ruler",
+                color: "cyan",
+                context: "Necesitas convertir una longitud de 3.5 metros a milímetros para un plano de carpintería.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Unidades del S.I.</div>
+                        <div class="p-3 bg-cyan-50 dark:bg-cyan-950/80 text-cyan-950 dark:text-cyan-200 rounded-xl border border-cyan-300 font-mono font-bold text-xs">
+                            1 metro = 1,000 milímetros<br>
+                            3.5 m × 1,000 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">3,500 mm</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos milímetros equivalen a 3.5 metros?",
+                options: ["35 mm", "350 mm", "3,500 mm", "35,000 mm"],
+                correctAnswer: 2,
+                explanation: "El milímetro es un submúltiplo del metro (1 m = 1,000 mm). Multiplicamos 3.5 por 1,000 para obtener 3,500 mm."
+            },
+            {
+                id: 16,
+                title: "10.1 Conversión entre unidades del sistema inglés y del Sistema Internacional",
+                subtitles: "Medición y cálculo en diferentes contextos",
+                icon: "fa-right-left",
+                color: "teal",
+                context: "Una pieza metálica mide exactamente 5 pulgadas de largo. Si 1 pulgada equivale aproximadamente a 2.54 centímetros...",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Conversión Inglés a S.I.</div>
+                        <div class="p-3 bg-teal-50 dark:bg-teal-950/80 text-teal-950 dark:text-teal-200 rounded-xl border border-teal-300 font-mono font-bold text-xs">
+                            5 pulgadas × 2.54 cm/pulgada = <span class="text-emerald-600 dark:text-emerald-400 font-bold">12.7 cm</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿A cuántos centímetros equivalen 5 pulgadas?",
+                options: ["10.5 cm", "12.7 cm", "15.0 cm", "25.4 cm"],
+                correctAnswer: 1,
+                explanation: "Multiplicamos el valor en pulgadas por su equivalencia en centímetros: 5 * 2.54 = 12.7 cm."
+            },
+            {
+                id: 17,
+                title: "10.2 Perímetro y área de figuras compuestas",
+                subtitles: "Medición y cálculo en diferentes contextos",
+                icon: "fa-shapes",
+                color: "rose",
+                context: "Calcula el área de una figura compuesta por un rectángulo de 6 m de largo por 4 m de ancho y un triángulo superior con base de 6 m y altura de 3 m.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Figuras Compuestas</div>
+                        <div class="p-3 bg-rose-50 dark:bg-rose-950/80 text-rose-950 dark:text-rose-200 rounded-xl border border-rose-300 font-mono font-bold text-xs">
+                            Área rectángulo = 6 × 4 = 24 m²<br>
+                            Área triángulo = (6 × 3) ÷ 2 = 9 m²<br>
+                            Área total = 24 + 9 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">33 m²</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el área total de la figura compuesta?",
+                options: ["27 m²", "30 m²", "33 m²", "36 m²"],
+                correctAnswer: 2,
+                explanation: "Sumamos las áreas de las figuras simples que la componen: Área del rectángulo (24 m²) + Área del triángulo (9 m²) = 33 m²."
+            },
+            {
+                id: 18,
+                title: "11.1 Histogramas, polígonos de frecuencia y gráficas de línea",
+                subtitles: "Obtención y representación de información",
+                icon: "fa-chart-column",
+                color: "sky",
+                context: "En una gráfica estadística que muestra la evolución de temperaturas semanales mediante puntos unidos por segmentos rectos, ¿cómo se le denomina a esta representación?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Representaciones Gráficas</div>
+                        <div class="p-3 bg-sky-50 dark:bg-sky-950/80 text-sky-950 dark:text-sky-200 rounded-xl border border-sky-300 font-mono font-bold text-xs">
+                            Puntos conectados por segmentos de línea = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Gráfica de línea</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cómo se llama la gráfica que utiliza puntos unidos por líneas para mostrar tendencias?",
+                options: ["Histograma", "Gráfica de línea", "Diagrama circular", "Pictograma"],
+                correctAnswer: 1,
+                explanation: "Una gráfica de línea conecta puntos de datos con segmentos rectos, siendo ideal para mostrar cambios y tendencias a lo largo del tiempo."
+            },
+            {
+                id: 19,
+                title: "12.1 Medidas de tendencia central y de dispersión",
+                subtitles: "Interpretación de la información a través de medidas de tendencia central y dispersión",
+                icon: "fa-chart-pie",
+                color: "indigo",
+                context: "Dada la serie de datos de calificaciones: 7, 8, 8, 9, 10. Calcula la moda y la mediana.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Tendencia Central</div>
+                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-200 rounded-xl border border-indigo-300 font-mono font-bold text-xs">
+                            Datos ordenados: 7, 8, 8, 9, 10<br>
+                            Moda (más frecuente) = 8<br>
+                            Mediana (valor central) = <span class="text-emerald-600 dark:text-emerald-400 font-bold">8</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el valor de la moda y la mediana en este conjunto?",
+                options: ["Moda: 8, Mediana: 8", "Moda: 9, Mediana: 8", "Moda: 8, Mediana: 9", "Moda: 10, Mediana: 8"],
+                correctAnswer: 0,
+                explanation: "El número que más se repite (moda) es el 8. El valor ubicado exactamente en medio al ordenar los datos (mediana) también es el 8."
+            },
+            {
+                id: 20,
+                title: "12.2 Valores representativos de grupos de datos",
+                subtitles: "Interpretación de la información a través de medidas de tendencia central y dispersión",
+                icon: "fa-users",
+                color: "fuchsia",
+                context: "Para comparar el rendimiento académico general de dos grupos diferentes con distinto número de alumnos, ¿qué medida es más representativa para hallar el promedio por grupo?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Valores Representativos</div>
+                        <div class="p-3 bg-fuchsia-50 dark:bg-fuchsia-950/80 text-fuchsia-950 dark:text-fuchsia-200 rounded-xl border border-fuchsia-300 font-mono font-bold text-xs">
+                            Media aritmética ponderada / Media = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Valor central representativo</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la medida de tendencia central más empleada como valor representativo global?",
+                options: ["La moda", "La media aritmética", "El rango", "La desviación estándar"],
+                correctAnswer: 1,
+                explanation: "La media aritmética (promedio) es la medida de tendencia central más utilizada para representar y comparar el valor global de grupos de datos."
+            },
+            {
+                id: 21,
+                title: "13.1 Probabilidad frecuencial y clásica",
+                subtitles: "Azar e incertidumbre en la ocurrencia de eventos cotidianos",
+                icon: "fa-dice",
+                color: "emerald",
+                context: "Lanzas un dado legal de 6 caras numeradas del 1 al 6. ¿Cuál es la probabilidad clásica de obtener un número par (2, 4 o 6)?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Probabilidad Clásica</div>
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300 font-mono font-bold text-xs">
+                            Casos favorables (2, 4, 6) = 3<br>
+                            Casos totales = 6<br>
+                            P = 3/6 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">1/2 (50%)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la probabilidad clásica de obtener un número par en un dado?",
+                options: ["1/3", "1/2 (50%)", "2/3", "1/6"],
+                correctAnswer: 1,
+                explanation: "Hay 3 números pares (2, 4, 6) de un total de 6 caras posibles. Simplificando la fracción 3/6 obtenemos 1/2 o 50%."
+            },
+            {
+                id: 22,
+                title: "13.2 Medición de la probabilidad",
+                subtitles: "Azar e incertidumbre en la ocurrencia de eventos cotidianos",
+                icon: "fa-gauge-high",
+                color: "blue",
+                context: "Si la probabilidad matemática de que ocurra un evento aleatorio es exactamente 1 (o 100%), ¿cómo se le denomina a este tipo de evento?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Medición de Probabilidad</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-950 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            Probabilidad = 1 (100%) = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Evento seguro</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cómo se le llama a un evento cuya probabilidad de ocurrencia es igual a 1?",
+                options: ["Evento imposible", "Evento aleatorio", "Evento seguro", "Evento complementario"],
+                correctAnswer: 2,
+                explanation: "En la escala de probabilidad (que va de 0 a 1), un valor de 1 indica que el evento ocurrirá con total certeza, por lo que se denomina evento seguro."
+            }
+        ];
+
+        let currentModalIdx = 0;
+        let modalSelectedOption = null;
+        let isModalRevealed = false;
+
+        function getIconColors(colorName) {
+            const colors = {
+                'rose': 'bg-rose-100 dark:bg-rose-950/90 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-800',
+                'cyan': 'bg-cyan-100 dark:bg-cyan-950/90 text-cyan-600 dark:text-cyan-400 border border-cyan-300 dark:border-cyan-800',
+                'amber': 'bg-amber-100 dark:bg-amber-950/90 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-800',
+                'emerald': 'bg-emerald-100 dark:bg-emerald-950/90 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800',
+                'orange': 'bg-orange-100 dark:bg-orange-950/90 text-orange-600 dark:text-orange-400 border border-orange-300 dark:border-orange-800',
+                'fuchsia': 'bg-fuchsia-100 dark:bg-fuchsia-950/90 text-fuchsia-600 dark:text-fuchsia-400 border border-fuchsia-300 dark:border-fuchsia-800',
+                'sky': 'bg-sky-100 dark:bg-sky-950/90 text-sky-600 dark:text-sky-400 border border-sky-300 dark:border-sky-800',
+                'indigo': 'bg-indigo-100 dark:bg-indigo-950/90 text-indigo-600 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-800',
+                'teal': 'bg-teal-100 dark:bg-teal-950/90 text-teal-600 dark:text-teal-400 border border-teal-300 dark:border-teal-800',
+                'blue': 'bg-blue-100 dark:bg-blue-950/90 text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-800',
+                'violet': 'bg-violet-100 dark:bg-violet-950/90 text-violet-600 dark:text-violet-400 border border-violet-300 dark:border-violet-800',
+                'pink': 'bg-pink-100 dark:bg-pink-950/90 text-pink-600 dark:text-pink-400 border border-pink-300 dark:border-pink-800',
+                'lime': 'bg-lime-100 dark:bg-lime-950/90 text-lime-600 dark:text-lime-400 border border-lime-300 dark:border-lime-800',
+            };
+            return colors[colorName] || colors['indigo'];
+        }
+
+        function renderTopicsGrid() {
+            const container = document.getElementById('topics-container');
+            container.innerHTML = '';
+            
+            topicsData.forEach((topic, idx) => {
+                const iconColorClasses = getIconColors(topic.color);
+                const card = document.createElement('div');
+                card.className = "academic-card rounded-2xl p-5 cursor-pointer relative group flex flex-col h-full transform active:scale-95 transition-all";
+                card.onclick = () => {
+                    card.classList.add('scale-95', 'bg-indigo-50', 'dark:bg-indigo-950/40');
+                    setTimeout(() => card.classList.remove('scale-95', 'bg-indigo-50', 'dark:bg-indigo-950/40'), 150);
+                    openTopicModal(idx);
+                };
+                card.innerHTML = `
+                    <div class="absolute top-4 right-4 text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl ${iconColorClasses} flex items-center justify-center text-xl mb-4 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                        <i class="fa-solid ${topic.icon}"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-slate-900 dark:text-white text-base mb-1.5 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">${topic.title}</h3>
+                    <p class="text-xs font-semibold text-indigo-700 dark:text-indigo-400 mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${topic.subtitles}</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed flex-grow font-medium">${topic.context}</p>
+                    <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Ver Reto Interactivo</span>
+                        <div class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openTopicModal(idx) {
+            currentModalIdx = idx;
+            modalSelectedOption = null;
+            isModalRevealed = false;
+            
+            const topic = topicsData[idx];
+            document.getElementById('modal-counter-badge').innerText = `Reto ${idx + 1} de ${topicsData.length}`;
+            
+            const content = document.getElementById('modal-body-content');
+            const iconColorClasses = getIconColors(topic.color);            
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="inline-flex w-14 h-14 rounded-2xl ${iconColorClasses} items-center justify-center text-2xl mb-4 shadow-md">
+                        <i class="fa-solid ${topic.icon}"></i>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold font-display text-slate-900 dark:text-white mb-2 leading-tight">${topic.title}</h2>
+                    <span class="text-xs font-bold text-indigo-800 dark:text-indigo-300 bg-indigo-100/90 dark:bg-indigo-950/90 px-3 py-1 rounded-full border border-indigo-300 dark:border-indigo-700/80"><i class="fa-solid fa-location-dot mr-1"></i> ${topic.subtitles}</span>
+                </div>
+                
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-sm sm:text-base text-slate-900 dark:text-slate-100 leading-relaxed font-semibold mb-6 shadow-sm">
+                    ${topic.context}
+                </div>
+                
+                <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border-2 border-slate-200 dark:border-slate-800 shadow-md mb-6">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-4"><i class="fa-solid fa-circle-question text-indigo-600 dark:text-indigo-400 mr-1.5"></i> ${topic.question}</h4>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="modal-options-container">
+                        ${topic.options.map((opt, i) => `
+                            <button id="modal-opt-${i}" onclick="selectModalOption(${i})" class="w-full text-left px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all text-xs sm:text-sm font-semibold flex items-center gap-3 text-slate-900 dark:text-slate-100 modal-option-btn cursor-pointer active:scale-98">
+                                <span id="modal-opt-letter-${i}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-[11px] font-bold transition-colors">${String.fromCharCode(65 + i)}</span>
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button id="btn-reveal-solution" onclick="revealModalSolution(${idx})" class="w-full sm:w-auto px-6 py-3.5 bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl cursor-pointer active:scale-95">
+                        <i class="fa-solid fa-eye"></i> <span>Revelar Solución y Explicación</span>
+                    </button>
+                </div>
+
+                <div id="modal-solution-container" class="hidden mt-8 space-y-6 animate-fade-in">
+                    ${topic.diagram}
+                    <div id="modal-feedback" class="p-5 rounded-2xl text-xs sm:text-sm font-medium border shadow-sm"></div>
+                </div>
+            `;
+            
+            document.getElementById('rule-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            sfx.playTone(400, 'sine', 0.1);
+        }
+
+        function selectModalOption(idx) {
+            if (isModalRevealed) return;
+            modalSelectedOption = idx;
+            
+            const btns = document.querySelectorAll('.modal-option-btn');
+            btns.forEach((b, i) => {
+                const letter = document.getElementById(`modal-opt-letter-${i}`);
+                if (i === idx) {
+                    b.classList.add('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2', 'ring-indigo-200', 'dark:ring-indigo-900');
+                    b.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.add('bg-indigo-600', 'text-white');
+                    letter.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                } else {
+                    b.classList.remove('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2', 'ring-indigo-200', 'dark:ring-indigo-900');
+                    b.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.remove('bg-indigo-600', 'text-white');
+                    letter.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                }
+            });
+            sfx.playTone(600, 'sine', 0.05);
+        }
+
+        function revealModalSolution(idx) {
+            isModalRevealed = true;
+            const topic = topicsData[idx];
+            const correctIdx = topic.correctAnswer;
+
+            document.getElementById('btn-reveal-solution').classList.add('hidden');
+            document.getElementById('modal-solution-container').classList.remove('hidden');
+            
+            const btns = document.querySelectorAll('.modal-option-btn');
+            btns.forEach((b, i) => {
+                b.disabled = true;
+                b.classList.remove('hover:border-indigo-400', 'dark:hover:border-indigo-500', 'cursor-pointer');
+                if (i !== correctIdx && i !== modalSelectedOption) {
+                    b.classList.add('opacity-50');
+                }
+                b.classList.add('cursor-not-allowed');
+            });
+
+            const feedback = document.getElementById('modal-feedback');
+            
+            const correctBtn = document.getElementById(`modal-opt-${correctIdx}`);
+            correctBtn.classList.remove('opacity-50', 'border-slate-200', 'dark:border-slate-800', 'border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'bg-slate-50', 'dark:bg-slate-800/80');
+            correctBtn.classList.add('opacity-100', 'bg-emerald-50', 'dark:bg-emerald-950/80', 'border-emerald-500', 'dark:border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+            const correctLetter = document.getElementById(`modal-opt-letter-${correctIdx}`);
+            correctLetter.className = "w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-[11px] font-bold";
+            correctLetter.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+            if (modalSelectedOption === correctIdx) {
+                sfx.success();
+                addXP(50);
+                feedback.className = "p-5 rounded-2xl text-xs sm:text-sm font-semibold border bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-lg align-middle text-emerald-600 dark:text-emerald-400"></i> ¡Excelente análisis! (+50 XP) <div class="mt-3 font-normal text-emerald-950 dark:text-emerald-200 leading-relaxed">${topic.explanation}</div>`;
+            } else {
+                if (modalSelectedOption !== null) {
+                    sfx.error();
+                    const wrongBtn = document.getElementById(`modal-opt-${modalSelectedOption}`);
+                    wrongBtn.classList.remove('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2');
+                    wrongBtn.classList.add('opacity-100', 'bg-rose-50', 'dark:bg-rose-950/80', 'border-rose-400', 'dark:border-rose-600', 'text-rose-950', 'dark:text-rose-100');
+                    const wrongLetter = document.getElementById(`modal-opt-letter-${modalSelectedOption}`);
+                    wrongLetter.className = "w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center text-[11px] font-bold";
+                    wrongLetter.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                } else {
+                    sfx.playTone(500, 'sine', 0.15);
+                }
+                
+                feedback.className = "p-5 rounded-2xl text-xs sm:text-sm font-semibold border bg-indigo-50 dark:bg-indigo-950/80 border-indigo-300 dark:border-indigo-700 text-indigo-950 dark:text-indigo-100";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-info mr-1.5 text-lg align-middle text-indigo-600 dark:text-indigo-400"></i> Explicación Oficial <div class="mt-3 font-normal text-indigo-950 dark:text-indigo-200 leading-relaxed">${topic.explanation}</div>`;
+            }
+        }
+
+        function closeFullscreenModal() {
+            document.getElementById('rule-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateModal(dir) {
+            let next = currentModalIdx + dir;
+            if (next < 0) next = topicsData.length - 1;
+            if (next >= topicsData.length) next = 0;
+            openTopicModal(next);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeFullscreenModal();
+            if (!document.getElementById('rule-modal').classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') navigateModal(1);
+                if (e.key === 'ArrowLeft') navigateModal(-1);
+            }
+        });
+
+        // QUIZ LOGIC
+        let quizQuestions = [];
+        let currentQIndex = 0;
+        let quizStreak = 0;
+        let quizSelectedOption = null;
+
+        document.getElementById('btn-start-quiz').addEventListener('click', () => {
+            sfx.playTone(440, 'sine', 0.1);
+            quizQuestions = [...topicsData].sort(() => 0.5 - Math.random()).slice(0, 5);
+            currentQIndex = 0;
+            quizStreak = 0;
+            
+            document.getElementById('quiz-screen-start').classList.add('hidden');
+            document.getElementById('quiz-screen-active').classList.remove('hidden');
+            loadQuizQuestion();
+        });
+
+        function loadQuizQuestion() {
+            quizSelectedOption = null;
+            const q = quizQuestions[currentQIndex];
+            document.getElementById('quiz-progress-text').innerText = `Pregunta ${currentQIndex + 1} de ${quizQuestions.length} • ${q.subtitles}`;
+            document.getElementById('quiz-streak-text').innerHTML = `<i class="fa-solid fa-fire mr-1"></i> Racha: ${quizStreak}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `quiz-opt-${idx}`;
+                btn.className = "w-full text-left px-4 py-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-900 dark:text-slate-100 font-semibold text-xs sm:text-sm transition-all shadow-sm quiz-opt-btn flex items-center gap-3 cursor-pointer active:scale-98";
+                btn.innerHTML = `<span id="quiz-opt-letter-${idx}" class="inline-flex w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 items-center justify-center text-[11px] font-bold transition-colors">${String.fromCharCode(65 + idx)}</span> <span>${opt}</span>`;
+                btn.onclick = () => selectQuizOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            const checkBtn = document.getElementById('btn-check-quiz');
+            checkBtn.classList.remove('hidden', 'bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'shadow-md', 'cursor-pointer');
+            checkBtn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400', 'cursor-not-allowed');
+            checkBtn.innerHTML = "Selecciona una respuesta";
+            checkBtn.disabled = true;
+            checkBtn.onclick = () => evaluateQuizAnswer(q.correctAnswer, q.explanation);
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('btn-next-quiz').classList.add('hidden');
+        }
+
+        function selectQuizOption(idx) {
+            quizSelectedOption = idx;
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+            btns.forEach((b, i) => {
+                const letter = document.getElementById(`quiz-opt-letter-${i}`);
+                if (i === idx) {
+                    b.classList.add('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                    b.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.add('bg-indigo-600', 'text-white');
+                    letter.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                } else {
+                    b.classList.remove('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                    b.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.remove('bg-indigo-600', 'text-white');
+                    letter.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                }
+            });
+
+            const checkBtn = document.getElementById('btn-check-quiz');
+            checkBtn.disabled = false;
+            checkBtn.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400', 'cursor-not-allowed');
+            checkBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer', 'shadow-md');
+            checkBtn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Comprobar Respuesta';
+            sfx.playTone(600, 'sine', 0.05);
+        }
+
+        function evaluateQuizAnswer(correct, explanation) {
+            const chosen = quizSelectedOption;
+            document.getElementById('btn-check-quiz').classList.add('hidden');
+            
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+            btns.forEach((b, i) => {
+                b.disabled = true;
+                b.classList.add('cursor-not-allowed');
+                b.classList.remove('hover:border-indigo-400', 'dark:hover:border-indigo-500');
+                if (i !== correct && i !== chosen) {
+                    b.classList.add('opacity-50');
+                }
+            });
+            
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+            document.getElementById('btn-next-quiz').classList.remove('hidden');
+
+            const correctBtn = document.getElementById(`quiz-opt-${correct}`);
+            correctBtn.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80', 'border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+            correctBtn.classList.add('bg-emerald-50', 'dark:bg-emerald-950/80', 'border-emerald-500', 'dark:border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+            const correctLetter = document.getElementById(`quiz-opt-letter-${correct}`);
+            correctLetter.className = "inline-flex w-7 h-7 rounded-lg bg-emerald-500 text-white items-center justify-center text-[11px] font-bold";
+            correctLetter.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+            if (chosen === correct) {
+                sfx.success();
+                quizStreak++;
+                const bonus = quizStreak > 2 ? 20 : 0;
+                addXP(100 + bonus);
+                
+                feedback.className = "p-4 rounded-xl mb-4 text-xs sm:text-sm font-semibold border bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100 animate-fade-in";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-emerald-600 dark:text-emerald-400"></i> ¡Excelente! +100 XP ${bonus ? `(Bono Racha +${bonus} XP)` : ''}<br><span class="block mt-1.5 font-normal text-emerald-950 dark:text-emerald-200">${explanation}</span>`;
+            } else {
+                sfx.error();
+                quizStreak = 0;
+                
+                const wrongBtn = document.getElementById(`quiz-opt-${chosen}`);
+                wrongBtn.classList.remove('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                wrongBtn.classList.add('bg-rose-50', 'dark:bg-rose-950/80', 'border-rose-400', 'dark:border-rose-600', 'text-rose-950', 'dark:text-rose-100');
+                const wrongLetter = document.getElementById(`quiz-opt-letter-${chosen}`);
+                wrongLetter.className = "inline-flex w-7 h-7 rounded-lg bg-rose-500 text-white items-center justify-center text-[11px] font-bold";
+                wrongLetter.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                
+                feedback.className = "p-4 rounded-xl mb-4 text-xs sm:text-sm font-semibold border bg-rose-50 dark:bg-rose-950/80 border-rose-300 dark:border-rose-700 text-rose-950 dark:text-rose-100 animate-fade-in";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-600 dark:text-rose-400"></i> Incorrecto. La respuesta era la ${String.fromCharCode(65 + correct)}.<br><span class="block mt-1.5 font-normal text-rose-950 dark:text-rose-200">${explanation}</span>`;
+            }
+        }
+
+        document.getElementById('btn-next-quiz').addEventListener('click', () => {
+            currentQIndex++;
+            if (currentQIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                sfx.success();
+                confetti({ particleCount: 100, spread: 100, origin: { y: 0.5 } });
+                document.getElementById('quiz-screen-active').classList.add('hidden');
+                document.getElementById('quiz-screen-start').classList.remove('hidden');
+                document.getElementById('quiz-screen-start').innerHTML = `
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-emerald-300 dark:border-emerald-800">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">¡Quiz Completado!</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-md mx-auto mb-6 font-medium">
+                        Gran trabajo demostrando tu razonamiento. Tienes un total de ${totalXP} XP.
+                    </p>
+                    <button onclick="location.reload()" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer">
+                        Volver al Inicio
+                    </button>
+                `;
+            }
+        });
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTopicsGrid();
+            document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+            
+            const savedTheme = localStorage.getItem('uruapanmath_2do_theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon text-base';
+            }
+        });
+    </script>
+</body>
+</html>

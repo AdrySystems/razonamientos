@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Grado • Secundaria • Uruapan, Michoacán</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Lexend', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'bounce-subtle': 'bounceSubtle 1.5s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(12px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.02)' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-3px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --bg-glass: rgba(255, 255, 255, 0.94);
+            --border-main: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-muted: #475569;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0b1120;
+            --bg-card: #131c31;
+            --bg-card-hover: #1e293b;
+            --bg-glass: rgba(19, 28, 49, 0.94);
+            --border-main: #334155;
+            --border-subtle: #1e293b;
+            --text-heading: #f8fafc;
+            --text-body: #e2e8f0;
+            --text-muted: #cbd5e1;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 40px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Lexend', sans-serif;
+            color: var(--text-heading);
+        }
+
+        .academic-glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border-color: var(--border-main);
+        }
+
+        .academic-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .academic-card:hover {
+            background-color: var(--bg-card-hover);
+            border-color: #3b82f6;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px) scale(1.015);
+        }
+
+        .academic-card:active {
+            transform: translateY(-2px) scale(0.985);
+        }
+
+        body.projection-mode {
+            font-size: 1.2rem !important;
+            line-height: 1.7 !important;
+        }
+
+        body.projection-mode .academic-card {
+            border-width: 2.5px !important;
+            border-color: #3b82f6 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-page);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <div id="projector-indicator" class="hidden bg-blue-900 text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 shadow-inner z-50">
+        <i class="fa-solid fa-display text-blue-300 animate-pulse"></i>
+        <span>MODO PROYECTOR ACTIVO — Optimizado para el Aula de Clases</span>
+        <button onclick="toggleProjectionMode()" class="ml-4 underline hover:text-blue-200 text-xs font-semibold cursor-pointer">Desactivar</button>
+    </div>
+
+    <header class="sticky top-0 z-40 academic-glass border-b transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3.5 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">URUAPAN<span class="text-blue-600 dark:text-blue-400">MATH</span></span>
+                        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 px-2.5 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700/80 font-extrabold">
+                            Portal Académico
+                        </span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 text-[11px] mt-0.5">
+                        <i class="fa-solid fa-chalkboard-user text-blue-600 dark:text-blue-400"></i>
+                        <span class="text-slate-600 dark:text-slate-300 font-medium">Profesor:</span>
+                        <strong class="text-slate-900 dark:text-slate-100 font-bold">Adrian Cipriano Lara</strong>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <a href="#grados-grid" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Seleccionar Grado</a>
+            </nav>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="projection-btn" onclick="toggleProjectionMode()" class="px-3.5 py-2 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer" title="Activar Modo Proyector">
+                    <i class="fa-solid fa-display text-blue-600 dark:text-blue-400"></i>
+                    <span class="hidden md:inline">Proyector</span>
+                </button>
+
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 transition-all shadow-sm focus:outline-none cursor-pointer" title="Cambiar Tema">
+                    <i id="theme-icon" class="fa-solid fa-sun text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 mb-6 shadow-2xl relative overflow-hidden border border-indigo-800/40">
+            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs bg-indigo-500/30 text-indigo-100 font-extrabold px-3.5 py-1 rounded-full border border-indigo-400/40">
+                            Educación Secundaria • Matemáticas
+                        </span>
+                        <span class="text-xs bg-amber-400 text-slate-950 font-extrabold px-3.5 py-1 rounded-full shadow-sm">
+                            Uruapan, Michoacán
+                        </span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white leading-tight">
+                        Razonamientos Lógico Matemáticos
+                    </h1>
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed">
+                        Accede a las actividades de razonamiento lógico-matemático, retos interactivos y material didáctico oficial para primero, segundo o tercer grado de secundaria.
+                    </p>
+                </div>
+
+                <!-- Tarjeta Profesor Titular Premium y Destacada -->
+                <div class="bg-gradient-to-br from-indigo-900/95 via-blue-950 to-slate-900/95 backdrop-blur-2xl border-2 border-indigo-400/60 p-6 rounded-3xl flex items-center gap-5 self-stretch md:self-auto shadow-2xl shadow-indigo-900/50 relative group transition-transform hover:scale-105">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md border border-amber-200">
+                        <i class="fa-solid fa-award mr-1"></i> Docente Titular
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-blue-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-indigo-500/40 shrink-0 group-hover:rotate-6 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="text-xs space-y-1.5">
+                        <span class="text-indigo-300 block text-[11px] font-extrabold uppercase tracking-widest">Matemáticas Secundaria</span>
+                        <strong class="text-white text-lg sm:text-xl font-display font-black block tracking-tight">Adrian Cipriano Lara</strong>
+                        <span class="inline-flex items-center gap-1.5 text-slate-300 text-xs font-semibold pt-0.5">
+                            <i class="fa-solid fa-location-dot text-amber-400"></i> Uruapan, Michoacán
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="grados-grid" class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="mb-8 text-center sm:text-left">
+            <span class="bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700/80 text-xs px-3.5 py-1 rounded-full font-bold uppercase tracking-wider inline-block mb-2">
+                <i class="fa-solid fa-graduation-cap mr-1.5"></i> Grados Escolares
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                Elige tu Nivel de Secundaria
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">
+                Haz clic en la tarjeta correspondiente para ingresar al contenido específico de cada grado.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            <!-- 1° Grado -->
+            <a href="primero.html" class="academic-card rounded-3xl p-8 cursor-pointer relative group flex flex-col justify-between transform active:scale-95 transition-all text-left">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-16 h-16 rounded-2xl bg-cyan-100 dark:bg-cyan-950/90 text-cyan-600 dark:text-cyan-400 border border-cyan-300 dark:border-cyan-800 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <span class="text-xs bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-bold px-3 py-1 rounded-full border border-cyan-300 dark:border-cyan-800">
+                            Nivel Inicial
+                        </span>
+                    </div>
+                    <h3 class="font-display font-extrabold text-slate-900 dark:text-white text-2xl mb-2 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">1° de Secundaria</h3>
+                    <p class="text-xs font-bold text-cyan-700 dark:text-cyan-400 mb-4"><i class="fa-solid fa-location-dot mr-1"></i> Razonamiento Básico y Fundamentos</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        Introducción al pensamiento lógico, operaciones con números enteros y fraccionarios, proporcionalidad y primeras nociones algebraicas.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-cyan-600">Ingresar a 1°</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:bg-cyan-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 2° Grado -->
+            <a href="segundo.html" class="academic-card rounded-3xl p-8 cursor-pointer relative group flex flex-col justify-between transform active:scale-95 transition-all text-left">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-16 h-16 rounded-2xl bg-amber-100 dark:bg-amber-950/90 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-800 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <span class="text-xs bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
+                            Nivel Intermedio
+                        </span>
+                    </div>
+                    <h3 class="font-display font-extrabold text-slate-900 dark:text-white text-2xl mb-2 group-hover:text-amber-600 dark:hover:text-amber-400 transition-colors">2° de Secundaria</h3>
+                    <p class="text-xs font-bold text-amber-700 dark:text-amber-400 mb-4"><i class="fa-solid fa-location-dot mr-1"></i> Sistemas y Ecuaciones</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        Sistemas de ecuaciones lineales, multiplicación y división de polinomios, funciones lineales y teorema de Pitágoras aplicado.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-amber-600">Ingresar a 2°</span>
+                    <div class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3° Grado -->
+            <a href="tercero.html" class="academic-card rounded-3xl p-8 cursor-pointer relative group flex flex-col justify-between transform active:scale-95 transition-all text-left border-2 border-indigo-500/60 shadow-xl">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-950/90 text-indigo-600 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-800 flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                            <i class="fa-solid fa-square-root-variable"></i>
+                        </div>
+                        <span class="text-xs bg-indigo-500 text-white font-black px-3 py-1 rounded-full shadow-sm">
+                            Nivel Avanzado
+                        </span>
+                    </div>
+                    <h3 class="font-display font-extrabold text-slate-900 dark:text-white text-2xl mb-2 group-hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">3° de Secundaria</h3>
+                    <p class="text-xs font-bold text-indigo-700 dark:text-indigo-400 mb-4"><i class="fa-solid fa-location-dot mr-1"></i> Ecuaciones Cuadráticas y Funciones</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                        Ecuaciones cuadráticas, fórmulas generales, funciones cuadráticas, volúmenes de cuerpos geométricos y semejanza avanzada.
+                    </p>
+                </div>
+                <div class="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700">Ingresar a 3°</span>
+                    <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center group-hover:bg-indigo-700 transition-colors">
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-300 dark:border-slate-800 py-8 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2.5 mt-12 bg-slate-100/50 dark:bg-slate-900/50 font-medium">
+        <p>UruapanMath • Portal Oficial de Razonamiento Lógico-Matemático en Secundaria</p>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs shadow-sm">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600 dark:text-indigo-400"></i>
+            <span>Profesor Titular: <strong class="text-slate-900 dark:text-white font-bold">Adrian Cipriano Lara</strong></span>
+        </div>
+    </footer>
+
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+            playTone(freq, type = 'sine', duration = 0.1) {
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') {
+                        this.ctx.resume();
+                    }
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            }
+        }
+        const sfx = new SoundFX();
+
+        let isProjectionMode = false;
+        function toggleProjectionMode() {
+            isProjectionMode = !isProjectionMode;
+            document.body.classList.toggle('projection-mode', isProjectionMode);
+            document.getElementById('projector-indicator').classList.toggle('hidden', !isProjectionMode);
+            sfx.playTone(isProjectionMode ? 660 : 440, 'sine', 0.1);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', current);
+            localStorage.setItem('uruapanmath_menu_theme', current);
+            document.getElementById('theme-icon').className = current === 'light' ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+            sfx.playTone(520, 'sine', 0.05);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('uruapanmath_menu_theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon text-base';
+            }
+        });
+    </script>
+</body>
+</html>

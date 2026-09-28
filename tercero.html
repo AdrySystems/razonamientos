@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razonamiento Lógico Matemático • 3° Secundaria • Uruapan, Michoacán</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Lexend', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'bounce-subtle': 'bounceSubtle 1.5s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(12px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.02)' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-3px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --bg-glass: rgba(255, 255, 255, 0.94);
+            --border-main: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-muted: #475569;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0b1120;
+            --bg-card: #131c31;
+            --bg-card-hover: #1e293b;
+            --bg-glass: rgba(19, 28, 49, 0.94);
+            --border-main: #334155;
+            --border-subtle: #1e293b;
+            --text-heading: #f8fafc;
+            --text-body: #e2e8f0;
+            --text-muted: #cbd5e1;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 40px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Lexend', sans-serif;
+            color: var(--text-heading);
+        }
+
+        .academic-glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border-color: var(--border-main);
+        }
+
+        .academic-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .academic-card:hover {
+            background-color: var(--bg-card-hover);
+            border-color: #3b82f6;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px) scale(1.015);
+        }
+
+        .academic-card:active {
+            transform: translateY(-2px) scale(0.985);
+        }
+
+        body.projection-mode {
+            font-size: 1.2rem !important;
+            line-height: 1.7 !important;
+        }
+
+        body.projection-mode .academic-card {
+            border-width: 2.5px !important;
+            border-color: #3b82f6 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-page);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <div id="projector-indicator" class="hidden bg-blue-900 text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 shadow-inner z-50">
+        <i class="fa-solid fa-display text-blue-300 animate-pulse"></i>
+        <span>MODO PROYECTOR ACTIVO — Optimizado para el Aula de Clases</span>
+        <button onclick="toggleProjectionMode()" class="ml-4 underline hover:text-blue-200 text-xs font-semibold cursor-pointer">Desactivar</button>
+    </div>
+
+    <header class="sticky top-0 z-40 academic-glass border-b transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3.5 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">URUAPAN<span class="text-blue-600 dark:text-blue-400">MATH</span></span>
+                        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 px-2.5 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700/80 font-extrabold">
+                            3° Secundaria
+                        </span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 text-[11px] mt-0.5">
+                        <i class="fa-solid fa-chalkboard-user text-blue-600 dark:text-blue-400"></i>
+                        <span class="text-slate-600 dark:text-slate-300 font-medium">Profesor:</span>
+                        <strong class="text-slate-900 dark:text-slate-100 font-bold">Adrian Cipriano Lara</strong>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <a href="#temas-grid" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Retos Cotidianos</a>
+                <a href="#evaluacion" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Quiz Exprés</a>
+            </nav>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="projection-btn" onclick="toggleProjectionMode()" class="px-3.5 py-2 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer" title="Activar Modo Proyector">
+                    <i class="fa-solid fa-display text-blue-600 dark:text-blue-400"></i>
+                    <span class="hidden md:inline">Proyector</span>
+                </button>
+
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 transition-all shadow-sm focus:outline-none cursor-pointer" title="Cambiar Tema">
+                    <i id="theme-icon" class="fa-solid fa-sun text-base"></i>
+                </button>
+
+                <div class="flex items-center gap-2 bg-blue-100/90 dark:bg-blue-950/90 border border-blue-300 dark:border-blue-700/80 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm">
+                    <i class="fa-solid fa-bolt text-amber-500 dark:text-amber-400"></i>
+                    <span id="nav-xp" class="text-blue-900 dark:text-blue-200">0 XP</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 mb-6 shadow-2xl relative overflow-hidden border border-indigo-800/40">
+            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs bg-indigo-500/30 text-indigo-100 font-extrabold px-3.5 py-1 rounded-full border border-indigo-400/40">
+                            3° de Secundaria • Razonamiento Lógico
+                        </span>
+                        <span class="text-xs bg-amber-400 text-slate-950 font-extrabold px-3.5 py-1 rounded-full shadow-sm">
+                            Uruapan, Michoacán
+                        </span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white leading-tight">
+                        Razonamiento Lógico con Situaciones Reales
+                    </h1>
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed">
+                        Retos prácticos diseñados para el tercer grado de secundaria, adaptados a situaciones de nuestro entorno. Fortalece tus habilidades analíticas con explicaciones detalladas y diagramas visuales paso a paso.
+                    </p>
+                </div>
+
+                <!-- Tarjeta Profesor Titular Premium y Destacada -->
+                <div class="bg-gradient-to-br from-indigo-900/95 via-blue-950 to-slate-900/95 backdrop-blur-2xl border-2 border-indigo-400/60 p-6 rounded-3xl flex items-center gap-5 self-stretch md:self-auto shadow-2xl shadow-indigo-900/50 relative group transition-transform hover:scale-105">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md border border-amber-200">
+                        <i class="fa-solid fa-award mr-1"></i> Docente Titular
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-blue-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-indigo-500/40 shrink-0 group-hover:rotate-6 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="text-xs space-y-1.5">
+                        <span class="text-indigo-300 block text-[11px] font-extrabold uppercase tracking-widest">Matemáticas 3° Secundaria</span>
+                        <strong class="text-white text-lg sm:text-xl font-display font-black block tracking-tight">Adrian Cipriano Lara</strong>
+                        <span class="inline-flex items-center gap-1.5 text-slate-300 text-xs font-semibold pt-0.5">
+                            <i class="fa-solid fa-location-dot text-amber-400"></i> Uruapan, Michoacán
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="temas-grid" class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="mb-8">
+            <span class="bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700/80 text-xs px-3.5 py-1 rounded-full font-bold uppercase tracking-wider inline-block mb-2">
+                <i class="fa-solid fa-bullseye mr-1.5"></i> Retos de 3° Grado
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                Elige un Reto, Analiza y Comprueba
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">
+                Haz clic en cualquier tarjeta para explorar el reto interactivo, su diagrama visual y la comprobación de resultados.
+            </p>
+        </div>
+
+        <div id="topics-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <section id="evaluacion" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="academic-card rounded-3xl p-6 sm:p-10 max-w-4xl mx-auto shadow-xl">
+            <div class="text-center mb-8">
+                <span class="text-indigo-800 dark:text-indigo-300 font-extrabold text-xs uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/90 px-3.5 py-1 rounded-full border border-indigo-300 dark:border-indigo-700/80 inline-block mb-2">Evaluación Formativa • 3° Secundaria</span>
+                <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                    Quiz Exprés de Razonamiento 3°
+                </h2>
+            </div>
+
+            <div id="quiz-screen-start" class="text-center py-6">
+                <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-indigo-300 dark:border-indigo-800 shadow-md">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">¿Listo para demostrar tus conocimientos?</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-md mx-auto mb-6 font-medium">
+                    Responde 5 preguntas aleatorias del temario de tercer grado y acumula puntos XP.
+                </p>
+                <button id="btn-start-quiz" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 cursor-pointer">
+                    <i class="fa-solid fa-play mr-2"></i> Iniciar Quiz de 3° Grado
+                </button>
+            </div>
+
+            <div id="quiz-screen-active" class="hidden">
+                <div class="flex justify-between items-center mb-6 text-xs font-bold text-slate-700 dark:text-slate-200 border-b pb-3 border-slate-300 dark:border-slate-700">
+                    <span id="quiz-progress-text" class="text-indigo-800 dark:text-indigo-300">Pregunta 1 de 5</span>
+                    <span id="quiz-streak-text" class="text-amber-600 dark:text-amber-400"><i class="fa-solid fa-fire mr-1"></i> Racha: 0</span>
+                </div>
+
+                <div class="mb-6 space-y-4">
+                    <h4 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-relaxed">¿Pregunta?</h4>
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <!-- JS Populated -->
+                    </div>
+                    <button id="btn-check-quiz" class="hidden mt-6 w-full sm:w-auto mx-auto px-6 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-xs sm:text-sm cursor-not-allowed transition-all block">
+                        Selecciona una respuesta
+                    </button>
+                </div>
+
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl mb-4 text-xs sm:text-sm border font-medium animate-fade-in">
+                    <!-- JS Populated -->
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="btn-next-quiz" class="hidden px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs sm:text-sm transition-all shadow-md cursor-pointer animate-fade-in">
+                        Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-300 dark:border-slate-800 py-8 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2.5 mt-12 bg-slate-100/50 dark:bg-slate-900/50 font-medium">
+        <p>UruapanMath • Razonamiento Lógico-Matemático para 3° de Secundaria</p>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs shadow-sm">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600 dark:text-indigo-400"></i>
+            <span>Profesor Titular: <strong class="text-slate-900 dark:text-white font-bold">Adrian Cipriano Lara</strong></span>
+        </div>
+    </footer>
+
+    <div id="rule-modal" class="fixed inset-0 z-[100] hidden bg-slate-950/85 backdrop-blur-md overflow-y-auto transition-opacity duration-300 text-slate-900 dark:text-slate-100">
+        <div class="min-h-screen px-4 py-6 sm:px-8 flex flex-col justify-between max-w-4xl mx-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-300 dark:border-slate-700 mb-6">
+                <button onclick="closeFullscreenModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer border border-slate-300 dark:border-slate-600">
+                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Volver</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="navigateModal(-1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span id="modal-counter-badge" class="text-xs font-bold font-mono text-indigo-800 dark:text-indigo-300 px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl shadow-sm">
+                        Contenido 1
+                    </span>
+                    <button onclick="navigateModal(1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-body-content" class="flex-grow">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-slate-300 dark:border-slate-700 flex items-center justify-between text-xs text-slate-600 dark:text-slate-400">
+                <span>Presiona <kbd class="px-2 py-0.5 bg-slate-200 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-slate-800 dark:text-slate-200 font-mono">ESC</kbd> para salir</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+            playTone(freq, type = 'sine', duration = 0.1) {
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') {
+                        this.ctx.resume();
+                    }
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            }
+            success() {
+                this.playTone(587.33, 'triangle', 0.15);
+                setTimeout(() => this.playTone(880, 'triangle', 0.25), 120);
+            }
+            error() {
+                this.playTone(220, 'sawtooth', 0.2);
+                setTimeout(() => this.playTone(164.81, 'sawtooth', 0.3), 150);
+            }
+        }
+        const sfx = new SoundFX();
+
+        let totalXP = parseInt(localStorage.getItem('uruapanmath_3er_xp') || '0');
+        function addXP(amount) {
+            totalXP += amount;
+            localStorage.setItem('uruapanmath_3er_xp', totalXP);
+            document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+            confetti({ particleCount: 35, spread: 70, origin: { y: 0.8 } });
+        }
+
+        let isProjectionMode = false;
+        function toggleProjectionMode() {
+            isProjectionMode = !isProjectionMode;
+            document.body.classList.toggle('projection-mode', isProjectionMode);
+            document.getElementById('projector-indicator').classList.toggle('hidden', !isProjectionMode);
+            sfx.playTone(isProjectionMode ? 660 : 440, 'sine', 0.1);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', current);
+            localStorage.setItem('uruapanmath_3er_theme', current);
+            document.getElementById('theme-icon').className = current === 'light' ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+            sfx.playTone(520, 'sine', 0.05);
+        }
+
+        // Datos oficiales adaptados para 3° de Secundaria con los temas solicitados
+        const topicsData = [
+            {
+                id: 1,
+                title: "1.1 Representación algebraica de áreas y volúmenes",
+                subtitles: "Introducción al álgebra",
+                icon: "fa-cubes",
+                color: "rose",
+                context: "Se construye una caja rectangular sin tapa recortando cuadrados de lado 'x' en las cuatro esquinas de una lámina metálica de 10 cm por 16 cm.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Volumen Algebraico</div>
+                        <div class="p-3 bg-rose-50 dark:bg-rose-950/80 text-rose-950 dark:text-rose-200 rounded-xl border border-rose-300 font-mono font-bold text-xs">
+                            Dimensiones: Largo = 16 - 2x, Ancho = 10 - 2x, Alto = x<br>
+                            V(x) = x(16 - 2x)(10 - 2x) = <span class="text-emerald-600 dark:text-emerald-400 font-bold">4x³ - 52x² + 160x</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la expresión algebraica polinómica del volumen de la caja?",
+                options: ["4x³ - 52x² + 160x", "2x³ - 26x² + 80x", "4x³ - 26x² + 160x", "x³ - 13x² + 80x"],
+                correctAnswer: 0,
+                explanation: "Multiplicamos las tres dimensiones: x * (16 - 2x) * (10 - 2x) = x * (160 - 32x - 20x + 4x²) = x * (4x² - 52x + 160) = 4x³ - 52x² + 160x."
+            },
+            {
+                id: 2,
+                title: "2.1 Ecuaciones cuadráticas de la forma Ax² + Bx + C = D",
+                subtitles: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-calculator",
+                color: "cyan",
+                context: "Resuelve la ecuación cuadrática reducida a su forma general para hallar las dimensiones de una estructura: 3x² + 5x - 8 = 0.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Ecuación Cuadrática General</div>
+                        <div class="p-3 bg-cyan-50 dark:bg-cyan-950/80 text-cyan-950 dark:text-cyan-200 rounded-xl border border-cyan-300 font-mono font-bold text-xs">
+                            Ax² + Bx + C = 0<br>
+                            En la ecuación: A = 3, B = 5, C = -8<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Grado 2 con coeficiente principal 3</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuáles son los valores de los coeficientes A, B y C en 3x² + 5x - 8 = 0?",
+                options: ["A = 3, B = 5, C = 8", "A = 3, B = 5, C = -8", "A = 1, B = 3, C = -5", "A = 3, B = -5, C = 8"],
+                correctAnswer: 1,
+                explanation: "Identificamos los coeficientes comparando con la forma estandarizada Ax² + Bx + C = 0. Aquí A acompaña a x² (3), B acompaña a x (5) y el término independiente es C (-8)."
+            },
+            {
+                id: 3,
+                title: "2.2 Solución de ecuaciones cuadráticas por factorización",
+                subtitles: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-puzzle-piece",
+                color: "amber",
+                context: "Resuelve por factorización la ecuación que modela un área de terreno: x² - 7x + 12 = 0.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Factorización de Trinomios</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-xs">
+                            x² - 7x + 12 = (x - 3)(x - 4) = 0<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Raíces: x₁ = 3, x₂ = 4</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuáles son las dos soluciones o raíces de la ecuación x² - 7x + 12 = 0?",
+                options: ["x = 2 y x = 5", "x = 3 y x = 4", "x = -3 y x = -4", "x = 1 y x = 12"],
+                correctAnswer: 1,
+                explanation: "Buscamos dos números que multiplicados den 12 y sumados den -7. Esos números son -3 y -4. Factorizado queda (x - 3)(x - 4) = 0, por lo que x₁ = 3 y x₂ = 4."
+            },
+            {
+                id: 4,
+                title: "2.3 Ecuaciones cuadráticas por fórmula general",
+                subtitles: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-square-root-variable",
+                color: "emerald",
+                context: "Aplica la fórmula general $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$ para resolver la ecuación: 2x² - 8x + 6 = 0.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Fórmula General</div>
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 rounded-xl border border-emerald-300 font-mono font-bold text-xs">
+                            Discriminante: Δ = (-8)² - 4(2)(6) = 64 - 48 = 16<br>
+                            x = (8 ± √16) ÷ 4 = (8 ± 4) ÷ 4<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">x₁ = 3, x₂ = 1</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuáles son las soluciones obtenidas al aplicar la fórmula general?",
+                options: ["x = 1 y x = 3", "x = 2 y x = 4", "x = -1 y x = -3", "x = 0 y x = 3"],
+                correctAnswer: 0,
+                explanation: "Con a=2, b=-8, c=6, el discriminante es 16. La raíz es 4. Obtenemos x = (8 + 4)/4 = 3 y x = (8 - 4)/4 = 1."
+            },
+            {
+                id: 5,
+                title: "3.1 Gráficas de funciones cuadráticas",
+                subtitles: "Funciones",
+                icon: "fa-chart-line",
+                color: "orange",
+                context: "Analiza la función cuadrática f(x) = x² - 4x + 3. Su representación en el plano cartesiano corresponde a una parábola.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Parábola Cuadrática</div>
+                        <div class="p-3 bg-orange-50 dark:bg-orange-950/80 text-orange-950 dark:text-orange-200 rounded-xl border border-orange-300 font-mono font-bold text-xs">
+                            Coeficiente a = 1 (> 0) $\implies$ Parábola cóncava hacia arriba (mínimo)<br>
+                            Vértice en (2, -1), Corte con eje y en (0, 3)
+                        </div>
+                    </div>
+                `,
+                question: "¿Hacia dónde abre la parábola y cuál es su orientación principal por tener a > 0?",
+                options: ["Hacia abajo (máximo)", "Hacia arriba (mínimo)", "Es una línea recta", "Es una hipérbola"],
+                correctAnswer: 1,
+                explanation: "Como el coeficiente principal a = 1 es positivo, la parábola abre hacia arriba, teniendo un punto mínimo en su vértice."
+            },
+            {
+                id: 6,
+                title: "3.2 Funciones",
+                subtitles: "Funciones",
+                icon: "fa-function",
+                color: "fuchsia",
+                context: "Una función relaciona a cada elemento de un conjunto de entrada (dominio) exactamente con un elemento del conjunto de salida (contra-dominio).",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Concepto de Función</div>
+                        <div class="p-3 bg-fuchsia-50 dark:bg-fuchsia-950/80 text-fuchsia-950 dark:text-fuchsia-200 rounded-xl border border-fuchsia-300 font-mono font-bold text-xs">
+                            Regla de correspondencia f(x)<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">A cada valor de x le corresponde un único valor de f(x)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la característica fundamental que define a una función matemática?",
+                options: ["Que cada entrada tiene un único valor de salida", "Que cada salida tiene múltiples entradas", "Que la gráfica siempre es una línea recta", "Que el dominio y rango son iguales"],
+                correctAnswer: 0,
+                explanation: "Por definición, una función es una regla de correspondencia donde a cada elemento del dominio le corresponde uno y solamente un elemento en el codominio."
+            },
+            {
+                id: 7,
+                title: "3.3 Reparto proporcional",
+                subtitles: "Funciones",
+                icon: "fa-scale-balanced",
+                color: "sky",
+                context: "Tres socios invierten $10,000, $20,000 y $30,000 pesos en un negocio en Uruapan que genera una ganancia total de $12,000 pesos.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Reparto Proporcional Directo</div>
+                        <div class="p-3 bg-sky-50 dark:bg-sky-950/80 text-sky-950 dark:text-sky-200 rounded-xl border border-sky-300 font-mono font-bold text-xs">
+                            Inversión total = $60,000<br>
+                            Socio 3 invierte 50% ($30,000)<br>
+                            Ganancia Socio 3 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">$6,000 pesos</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuánto le corresponde de ganancia al tercer socio que invirtió $30,000?",
+                options: ["$2,000", "$4,000", "$6,000", "$8,000"],
+                correctAnswer: 2,
+                explanation: "El tercer socio aportó la mitad del capital total ($30,000 de $60,000). Por lo tanto, le corresponde el 50% de las ganancias totales: $12,000 * 0.50 = $6,000."
+            },
+            {
+                id: 8,
+                title: "4.1 Congruencia y semejanza de triángulos",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-shapes",
+                color: "indigo",
+                context: "Dos triángulos rectángulos son semejantes. El triángulo pequeño tiene catetos de 3 cm y 4 cm. Si el cateto menor del triángulo grande mide 9 cm...",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Semejanza de Triángulos</div>
+                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-950 dark:text-indigo-200 rounded-xl border border-indigo-300 font-mono font-bold text-xs">
+                            Factor de escala = 9 cm ÷ 3 cm = 3<br>
+                            Cateto mayor grande = 4 cm × 3 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">12 cm</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuánto mide el cateto mayor del triángulo semejante grande?",
+                options: ["10 cm", "12 cm", "15 cm", "18 cm"],
+                correctAnswer: 1,
+                explanation: "La razón de semejanza es 9/3 = 3. Multiplicamos el otro cateto del triángulo pequeño por esta razón: 4 cm * 3 = 12 cm."
+            },
+            {
+                id: 9,
+                title: "4.2 Propiedades de los sólidos",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-cube",
+                color: "blue",
+                context: "En un poliedro convexo (como un cubo o un prisma pentagonal), se cumple el famoso teorema de Euler para caras (C), vértices (V) y aristas (A).",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Teorema de Euler para Poliedros</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-950 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            C + V - A = 2<br>
+                            Ejemplo (Cubo): 6 caras + 8 vértices - 12 aristas = <span class="text-emerald-600 dark:text-emerald-400 font-bold">2</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué relación fundamental establece el Teorema de Euler para cualquier poliedro convexo?",
+                options: ["C + V - A = 2", "C - V + A = 1", "C + V + A = 10", "A - C - V = 0"],
+                correctAnswer: 0,
+                explanation: "El teorema de Euler para poliedros establece que la suma del número de caras más el número de vértices menos el número de aristas es siempre igual a 2 (C + V - A = 2)."
+            },
+            {
+                id: 10,
+                title: "4.3 Sólidos de revolución",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-rotate",
+                color: "teal",
+                context: "Al girar un triángulo rectángulo sobre uno de sus catetos como eje fijo de rotación, ¿qué cuerpo geométrico tridimensional se genera?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Sólidos de Revolución</div>
+                        <div class="p-3 bg-teal-50 dark:bg-teal-950/80 text-teal-950 dark:text-teal-200 rounded-xl border border-teal-300 font-mono font-bold text-xs">
+                            Rotación de triángulo rectángulo $\implies$ <span class="text-emerald-600 dark:text-emerald-400 font-bold">Cono circular recto</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué sólido de revolución se obtiene al rotar un triángulo rectángulo alrededor de su cateto?",
+                options: ["Una esfera", "Un cono", "Un cilindro", "Un tronco de cono"],
+                correctAnswer: 1,
+                explanation: "Al girar un triángulo rectángulo sobre uno de sus catetos, la hipotenusa describe la superficie lateral y el otro cateto describe la base circular, generando un cono."
+            },
+            {
+                id: 11,
+                title: "4.4 Desarrollos planos de cuerpos sólidos",
+                subtitles: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-box-open",
+                color: "violet",
+                context: "Estudias el desarrollo plano de un cono circular recto formado por un sector circular y un círculo para la base.",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Desarrollo Plano</div>
+                        <div class="p-3 bg-violet-50 dark:bg-violet-950/80 text-violet-950 dark:text-violet-200 rounded-xl border border-violet-300 font-mono font-bold text-xs">
+                            Superficie lateral del cono = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Sector circular</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué figura geométrica plana compone la superficie lateral en el desarrollo plano de un cono?",
+                options: ["Un rectángulo", "Un sector circular", "Un triángulo isósceles", "Un trapecio"],
+                correctAnswer: 1,
+                explanation: "El desarrollo plano de la superficie lateral de un cono recto es un sector circular cuyo radio es la generatriz del cono."
+            },
+            {
+                id: 12,
+                title: "5.1 Volumen de prismas, pirámides y cilindros",
+                subtitles: "Circunferencia, círculo y esfera",
+                icon: "fa-database",
+                color: "pink",
+                context: "Calcula el volumen de un cilindro circular recto cuyo radio de la base es 3 cm y su altura es 10 cm (usa π ≈ 3.1416).",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Volumen del Cilindro</div>
+                        <div class="p-3 bg-pink-50 dark:bg-pink-950/80 text-pink-950 dark:text-pink-200 rounded-xl border border-pink-300 font-mono font-bold text-xs">
+                            V = Área_base × h = (π × r²) × h<br>
+                            V = (3.1416 × 3²) × 10 = 28.274 × 10 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">282.74 cm³</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el volumen del cilindro de r = 3 cm y h = 10 cm?",
+                options: ["188.50 cm³", "282.74 cm³", "314.16 cm³", "565.48 cm³"],
+                correctAnswer: 1,
+                explanation: "La fórmula es V = pi * r² * h. Con r=3 y h=10: V = 3.1416 * 9 * 10 = 282.74 cm³."
+            },
+            {
+                id: 13,
+                title: "5.2 Volumen y relación de cuerpos redondos: esferas, conos y cilindros",
+                subtitles: "Circunferencia, círculo y esfera",
+                icon: "fa-globe",
+                color: "lime",
+                context: "Un cono y un cilindro tienen exactamente el mismo radio basal 'r' y la misma altura 'h'. ¿Cuántas veces cabe el volumen del cono en el cilindro?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Relación Cono - Cilindro</div>
+                        <div class="p-3 bg-lime-50 dark:bg-lime-950/80 text-lime-950 dark:text-lime-200 rounded-xl border border-lime-300 font-mono font-bold text-xs">
+                            V_cilindro = πr²h<br>
+                            V_cono = (1/3)πr²h<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">El cilindro tiene exactamente 3 veces el volumen del cono</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué proporción de volumen guarda un cono respecto a un cilindro con igual radio y altura?",
+                options: ["Es la mitad (1/2)", "Es la tercera parte (1/3)", "Es la cuarta parte (1/4)", "Tienen el mismo volumen"],
+                correctAnswer: 1,
+                explanation: "El volumen del cono es V = (1/3) * pi * r² * h, mientras que el del cilindro es V = pi * r² * h. Por lo tanto, el cono ocupa exactamente una tercera parte del cilindro."
+            },
+            {
+                id: 14,
+                title: "6.1 Formulación del teorema de Pitágoras",
+                subtitles: "Medición y cálculo en diferentes contextos",
+                icon: "fa-triangle-exclamation",
+                color: "amber",
+                context: "En un triángulo rectángulo en el plano, los catetos miden 'a' y 'b', y la hipotenusa mide 'c'. ¿Cuál es la formulación algebraica exacta?",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Teorema de Pitágoras</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-xs">
+                            En todo triángulo rectángulo:<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">a² + b² = c²</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la expresión algebraica fundamental del Teorema de Pitágoras?",
+                options: ["a + b = c", "a² + b² = c²", "a² - b² = c²", "2a + 2b = c²"],
+                correctAnswer: 1,
+                explanation: "El Teorema de Pitágoras establece que en todo triángulo rectángulo, la suma de los cuadrados de las longitudes de los catetos es igual al cuadrado de la hipotenusa (a² + b² = c²)."
+            },
+            {
+                id: 15,
+                title: "6.2 Aplicación del teorema de Pitágoras",
+                subtitles: "Medición y cálculo en diferentes contextos",
+                icon: "fa-ruler-combined",
+                color: "cyan",
+                context: "Una escalera de 10 metros de longitud está apoyada contra una pared vertical. Si el pie de la escalera se encuentra a 6 metros de la base de la pared...",
+                diagram: `
+                    <div class="p-5 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-3 shadow-sm">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Aplicación Práctica</div>
+                        <div class="p-3 bg-cyan-50 dark:bg-cyan-950/80 text-cyan-950 dark:text-cyan-200 rounded-xl border border-cyan-300 font-mono font-bold text-xs">
+                            Hipotenusa (c) = 10, Cateto (b) = 6<br>
+                            a² = 10² - 6² = 100 - 36 = 64<br>
+                            a = √64 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">8 metros de altura</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿A qué altura de la pared llega la parte superior de la escalera?",
+                options: ["6 metros", "7 metros", "8 metros", "9 metros"],
+                correctAnswer: 2,
+                explanation: "Despejamos el cateto a de la fórmula a² = c² - b². Queda a² = 10² - 6² = 100 - 36 = 64. La raíz cuadrada de 64 es 8 metros."
+            }
+        ];
+
+        let currentModalIdx = 0;
+        let modalSelectedOption = null;
+        let isModalRevealed = false;
+
+        function getIconColors(colorName) {
+            const colors = {
+                'rose': 'bg-rose-100 dark:bg-rose-950/90 text-rose-600 dark:text-rose-400 border border-rose-300 dark:border-rose-800',
+                'cyan': 'bg-cyan-100 dark:bg-cyan-950/90 text-cyan-600 dark:text-cyan-400 border border-cyan-300 dark:border-cyan-800',
+                'amber': 'bg-amber-100 dark:bg-amber-950/90 text-amber-600 dark:text-amber-400 border border-amber-300 dark:border-amber-800',
+                'emerald': 'bg-emerald-100 dark:bg-emerald-950/90 text-emerald-600 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-800',
+                'orange': 'bg-orange-100 dark:bg-orange-950/90 text-orange-600 dark:text-orange-400 border border-orange-300 dark:border-orange-800',
+                'fuchsia': 'bg-fuchsia-100 dark:bg-fuchsia-950/90 text-fuchsia-600 dark:text-fuchsia-400 border border-fuchsia-300 dark:border-fuchsia-800',
+                'sky': 'bg-sky-100 dark:bg-sky-950/90 text-sky-600 dark:text-sky-400 border border-sky-300 dark:border-sky-800',
+                'indigo': 'bg-indigo-100 dark:bg-indigo-950/90 text-indigo-600 dark:text-indigo-400 border border-indigo-300 dark:border-indigo-800',
+                'teal': 'bg-teal-100 dark:bg-teal-950/90 text-teal-600 dark:text-teal-400 border border-teal-300 dark:border-teal-800',
+                'blue': 'bg-blue-100 dark:bg-blue-950/90 text-blue-600 dark:text-blue-400 border border-blue-300 dark:border-blue-800',
+                'violet': 'bg-violet-100 dark:bg-violet-950/90 text-violet-600 dark:text-violet-400 border border-violet-300 dark:border-violet-800',
+                'pink': 'bg-pink-100 dark:bg-pink-950/90 text-pink-600 dark:text-pink-400 border border-pink-300 dark:border-pink-800',
+                'lime': 'bg-lime-100 dark:bg-lime-950/90 text-lime-600 dark:text-lime-400 border border-lime-300 dark:border-lime-800',
+            };
+            return colors[colorName] || colors['indigo'];
+        }
+
+        function renderTopicsGrid() {
+            const container = document.getElementById('topics-container');
+            container.innerHTML = '';
+            
+            topicsData.forEach((topic, idx) => {
+                const iconColorClasses = getIconColors(topic.color);
+                const card = document.createElement('div');
+                card.className = "academic-card rounded-2xl p-5 cursor-pointer relative group flex flex-col h-full transform active:scale-95 transition-all";
+                card.onclick = () => {
+                    card.classList.add('scale-95', 'bg-indigo-50', 'dark:bg-indigo-950/40');
+                    setTimeout(() => card.classList.remove('scale-95', 'bg-indigo-50', 'dark:bg-indigo-950/40'), 150);
+                    openTopicModal(idx);
+                };
+                card.innerHTML = `
+                    <div class="absolute top-4 right-4 text-slate-400 dark:text-slate-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl ${iconColorClasses} flex items-center justify-center text-xl mb-4 shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                        <i class="fa-solid ${topic.icon}"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-slate-900 dark:text-white text-base mb-1.5 leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">${topic.title}</h3>
+                    <p class="text-xs font-semibold text-indigo-700 dark:text-indigo-400 mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${topic.subtitles}</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed flex-grow font-medium">${topic.context}</p>
+                    <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Ver Reto Interactivo</span>
+                        <div class="w-6 h-6 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openTopicModal(idx) {
+            currentModalIdx = idx;
+            modalSelectedOption = null;
+            isModalRevealed = false;
+            
+            const topic = topicsData[idx];
+            document.getElementById('modal-counter-badge').innerText = `Reto ${idx + 1} de ${topicsData.length}`;
+            
+            const content = document.getElementById('modal-body-content');
+            const iconColorClasses = getIconColors(topic.color);            
+            
+            content.innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="inline-flex w-14 h-14 rounded-2xl ${iconColorClasses} items-center justify-center text-2xl mb-4 shadow-md">
+                        <i class="fa-solid ${topic.icon}"></i>
+                    </div>
+                    <h2 class="text-xl sm:text-2xl font-bold font-display text-slate-900 dark:text-white mb-2 leading-tight">${topic.title}</h2>
+                    <span class="text-xs font-bold text-indigo-800 dark:text-indigo-300 bg-indigo-100/90 dark:bg-indigo-950/90 px-3 py-1 rounded-full border border-indigo-300 dark:border-indigo-700/80"><i class="fa-solid fa-location-dot mr-1"></i> ${topic.subtitles}</span>
+                </div>
+                
+                <div class="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-800 text-sm sm:text-base text-slate-900 dark:text-slate-100 leading-relaxed font-semibold mb-6 shadow-sm">
+                    ${topic.context}
+                </div>
+                
+                <div class="bg-white dark:bg-slate-900 p-5 sm:p-6 rounded-2xl border-2 border-slate-200 dark:border-slate-800 shadow-md mb-6">
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white mb-4"><i class="fa-solid fa-circle-question text-indigo-600 dark:text-indigo-400 mr-1.5"></i> ${topic.question}</h4>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="modal-options-container">
+                        ${topic.options.map((opt, i) => `
+                            <button id="modal-opt-${i}" onclick="selectModalOption(${i})" class="w-full text-left px-4 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 hover:border-indigo-400 dark:hover:border-indigo-500 transition-all text-xs sm:text-sm font-semibold flex items-center gap-3 text-slate-900 dark:text-slate-100 modal-option-btn cursor-pointer active:scale-98">
+                                <span id="modal-opt-letter-${i}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-[11px] font-bold transition-colors">${String.fromCharCode(65 + i)}</span>
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <button id="btn-reveal-solution" onclick="revealModalSolution(${idx})" class="w-full sm:w-auto px-6 py-3.5 bg-slate-900 hover:bg-slate-800 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center justify-center gap-2 shadow-lg hover:shadow-xl cursor-pointer active:scale-95">
+                        <i class="fa-solid fa-eye"></i> <span>Revelar Solución y Explicación</span>
+                    </button>
+                </div>
+
+                <div id="modal-solution-container" class="hidden mt-8 space-y-6 animate-fade-in">
+                    ${topic.diagram}
+                    <div id="modal-feedback" class="p-5 rounded-2xl text-xs sm:text-sm font-medium border shadow-sm"></div>
+                </div>
+            `;
+            
+            document.getElementById('rule-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            sfx.playTone(400, 'sine', 0.1);
+        }
+
+        function selectModalOption(idx) {
+            if (isModalRevealed) return;
+            modalSelectedOption = idx;
+            
+            const btns = document.querySelectorAll('.modal-option-btn');
+            btns.forEach((b, i) => {
+                const letter = document.getElementById(`modal-opt-letter-${i}`);
+                if (i === idx) {
+                    b.classList.add('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2', 'ring-indigo-200', 'dark:ring-indigo-900');
+                    b.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.add('bg-indigo-600', 'text-white');
+                    letter.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                } else {
+                    b.classList.remove('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2', 'ring-indigo-200', 'dark:ring-indigo-900');
+                    b.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.remove('bg-indigo-600', 'text-white');
+                    letter.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                }
+            });
+            sfx.playTone(600, 'sine', 0.05);
+        }
+
+        function revealModalSolution(idx) {
+            isModalRevealed = true;
+            const topic = topicsData[idx];
+            const correctIdx = topic.correctAnswer;
+
+            document.getElementById('btn-reveal-solution').classList.add('hidden');
+            document.getElementById('modal-solution-container').classList.remove('hidden');
+            
+            const btns = document.querySelectorAll('.modal-option-btn');
+            btns.forEach((b, i) => {
+                b.disabled = true;
+                b.classList.remove('hover:border-indigo-400', 'dark:hover:border-indigo-500', 'cursor-pointer');
+                if (i !== correctIdx && i !== modalSelectedOption) {
+                    b.classList.add('opacity-50');
+                }
+                b.classList.add('cursor-not-allowed');
+            });
+
+            const feedback = document.getElementById('modal-feedback');
+            
+            const correctBtn = document.getElementById(`modal-opt-${correctIdx}`);
+            correctBtn.classList.remove('opacity-50', 'border-slate-200', 'dark:border-slate-800', 'border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'bg-slate-50', 'dark:bg-slate-800/80');
+            correctBtn.classList.add('opacity-100', 'bg-emerald-50', 'dark:bg-emerald-950/80', 'border-emerald-500', 'dark:border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+            const correctLetter = document.getElementById(`modal-opt-letter-${correctIdx}`);
+            correctLetter.className = "w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-[11px] font-bold";
+            correctLetter.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+            if (modalSelectedOption === correctIdx) {
+                sfx.success();
+                addXP(50);
+                feedback.className = "p-5 rounded-2xl text-xs sm:text-sm font-semibold border bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-lg align-middle text-emerald-600 dark:text-emerald-400"></i> ¡Excelente análisis! (+50 XP) <div class="mt-3 font-normal text-emerald-950 dark:text-emerald-200 leading-relaxed">${topic.explanation}</div>`;
+            } else {
+                if (modalSelectedOption !== null) {
+                    sfx.error();
+                    const wrongBtn = document.getElementById(`modal-opt-${modalSelectedOption}`);
+                    wrongBtn.classList.remove('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80', 'ring-2');
+                    wrongBtn.classList.add('opacity-100', 'bg-rose-50', 'dark:bg-rose-950/80', 'border-rose-400', 'dark:border-rose-600', 'text-rose-950', 'dark:text-rose-100');
+                    const wrongLetter = document.getElementById(`modal-opt-letter-${modalSelectedOption}`);
+                    wrongLetter.className = "w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center text-[11px] font-bold";
+                    wrongLetter.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                } else {
+                    sfx.playTone(500, 'sine', 0.15);
+                }
+                
+                feedback.className = "p-5 rounded-2xl text-xs sm:text-sm font-semibold border bg-indigo-50 dark:bg-indigo-950/80 border-indigo-300 dark:border-indigo-700 text-indigo-950 dark:text-indigo-100";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-info mr-1.5 text-lg align-middle text-indigo-600 dark:text-indigo-400"></i> Explicación Oficial <div class="mt-3 font-normal text-indigo-950 dark:text-indigo-200 leading-relaxed">${topic.explanation}</div>`;
+            }
+        }
+
+        function closeFullscreenModal() {
+            document.getElementById('rule-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function navigateModal(dir) {
+            let next = currentModalIdx + dir;
+            if (next < 0) next = topicsData.length - 1;
+            if (next >= topicsData.length) next = 0;
+            openTopicModal(next);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeFullscreenModal();
+            if (!document.getElementById('rule-modal').classList.contains('hidden')) {
+                if (e.key === 'ArrowRight') navigateModal(1);
+                if (e.key === 'ArrowLeft') navigateModal(-1);
+            }
+        });
+
+        // QUIZ LOGIC
+        let quizQuestions = [];
+        let currentQIndex = 0;
+        let quizStreak = 0;
+        let quizSelectedOption = null;
+
+        document.getElementById('btn-start-quiz').addEventListener('click', () => {
+            sfx.playTone(440, 'sine', 0.1);
+            quizQuestions = [...topicsData].sort(() => 0.5 - Math.random()).slice(0, 5);
+            currentQIndex = 0;
+            quizStreak = 0;
+            
+            document.getElementById('quiz-screen-start').classList.add('hidden');
+            document.getElementById('quiz-screen-active').classList.remove('hidden');
+            loadQuizQuestion();
+        });
+
+        function loadQuizQuestion() {
+            quizSelectedOption = null;
+            const q = quizQuestions[currentQIndex];
+            document.getElementById('quiz-progress-text').innerText = `Pregunta ${currentQIndex + 1} de ${quizQuestions.length} • ${q.subtitles}`;
+            document.getElementById('quiz-streak-text').innerHTML = `<i class="fa-solid fa-fire mr-1"></i> Racha: ${quizStreak}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `quiz-opt-${idx}`;
+                btn.className = "w-full text-left px-4 py-3.5 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/80 hover:border-indigo-400 dark:hover:border-indigo-500 text-slate-900 dark:text-slate-100 font-semibold text-xs sm:text-sm transition-all shadow-sm quiz-opt-btn flex items-center gap-3 cursor-pointer active:scale-98";
+                btn.innerHTML = `<span id="quiz-opt-letter-${idx}" class="inline-flex w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 items-center justify-center text-[11px] font-bold transition-colors">${String.fromCharCode(65 + idx)}</span> <span>${opt}</span>`;
+                btn.onclick = () => selectQuizOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            const checkBtn = document.getElementById('btn-check-quiz');
+            checkBtn.classList.remove('hidden', 'bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'shadow-md', 'cursor-pointer');
+            checkBtn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400', 'cursor-not-allowed');
+            checkBtn.innerHTML = "Selecciona una respuesta";
+            checkBtn.disabled = true;
+            checkBtn.onclick = () => evaluateQuizAnswer(q.correctAnswer, q.explanation);
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('btn-next-quiz').classList.add('hidden');
+        }
+
+        function selectQuizOption(idx) {
+            quizSelectedOption = idx;
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+            btns.forEach((b, i) => {
+                const letter = document.getElementById(`quiz-opt-letter-${i}`);
+                if (i === idx) {
+                    b.classList.add('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                    b.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.add('bg-indigo-600', 'text-white');
+                    letter.classList.remove('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                } else {
+                    b.classList.remove('border-indigo-600', 'dark:border-indigo-400', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                    b.classList.add('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80');
+                    letter.classList.remove('bg-indigo-600', 'text-white');
+                    letter.classList.add('bg-slate-200', 'dark:bg-slate-700', 'text-slate-800', 'dark:text-slate-200');
+                }
+            });
+
+            const checkBtn = document.getElementById('btn-check-quiz');
+            checkBtn.disabled = false;
+            checkBtn.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'dark:text-slate-400', 'cursor-not-allowed');
+            checkBtn.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'text-white', 'cursor-pointer', 'shadow-md');
+            checkBtn.innerHTML = '<i class="fa-solid fa-check-double mr-2"></i> Comprobar Respuesta';
+            sfx.playTone(600, 'sine', 0.05);
+        }
+
+        function evaluateQuizAnswer(correct, explanation) {
+            const chosen = quizSelectedOption;
+            document.getElementById('btn-check-quiz').classList.add('hidden');
+            
+            const btns = document.querySelectorAll('.quiz-opt-btn');
+            btns.forEach((b, i) => {
+                b.disabled = true;
+                b.classList.add('cursor-not-allowed');
+                b.classList.remove('hover:border-indigo-400', 'dark:hover:border-indigo-500');
+                if (i !== correct && i !== chosen) {
+                    b.classList.add('opacity-50');
+                }
+            });
+            
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+            document.getElementById('btn-next-quiz').classList.remove('hidden');
+
+            const correctBtn = document.getElementById(`quiz-opt-${correct}`);
+            correctBtn.classList.remove('border-slate-200', 'dark:border-slate-800', 'bg-slate-50', 'dark:bg-slate-800/80', 'border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+            correctBtn.classList.add('bg-emerald-50', 'dark:bg-emerald-950/80', 'border-emerald-500', 'dark:border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+            const correctLetter = document.getElementById(`quiz-opt-letter-${correct}`);
+            correctLetter.className = "inline-flex w-7 h-7 rounded-lg bg-emerald-500 text-white items-center justify-center text-[11px] font-bold";
+            correctLetter.innerHTML = '<i class="fa-solid fa-check"></i>';
+
+            if (chosen === correct) {
+                sfx.success();
+                quizStreak++;
+                const bonus = quizStreak > 2 ? 20 : 0;
+                addXP(100 + bonus);
+                
+                feedback.className = "p-4 rounded-xl mb-4 text-xs sm:text-sm font-semibold border bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700 text-emerald-950 dark:text-emerald-100 animate-fade-in";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-check mr-1.5 text-emerald-600 dark:text-emerald-400"></i> ¡Excelente! +100 XP ${bonus ? `(Bono Racha +${bonus} XP)` : ''}<br><span class="block mt-1.5 font-normal text-emerald-950 dark:text-emerald-200">${explanation}</span>`;
+            } else {
+                sfx.error();
+                quizStreak = 0;
+                
+                const wrongBtn = document.getElementById(`quiz-opt-${chosen}`);
+                wrongBtn.classList.remove('border-indigo-600', 'bg-indigo-50', 'dark:bg-indigo-950/80');
+                wrongBtn.classList.add('bg-rose-50', 'dark:bg-rose-950/80', 'border-rose-400', 'dark:border-rose-600', 'text-rose-950', 'dark:text-rose-100');
+                const wrongLetter = document.getElementById(`quiz-opt-letter-${chosen}`);
+                wrongLetter.className = "inline-flex w-7 h-7 rounded-lg bg-rose-500 text-white items-center justify-center text-[11px] font-bold";
+                wrongLetter.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                
+                feedback.className = "p-4 rounded-xl mb-4 text-xs sm:text-sm font-semibold border bg-rose-50 dark:bg-rose-950/80 border-rose-300 dark:border-rose-700 text-rose-950 dark:text-rose-100 animate-fade-in";
+                feedback.innerHTML = `<i class="fa-solid fa-circle-xmark mr-1.5 text-rose-600 dark:text-rose-400"></i> Incorrecto. La respuesta era la ${String.fromCharCode(65 + correct)}.<br><span class="block mt-1.5 font-normal text-rose-950 dark:text-rose-200">${explanation}</span>`;
+            }
+        }
+
+        document.getElementById('btn-next-quiz').addEventListener('click', () => {
+            currentQIndex++;
+            if (currentQIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                sfx.success();
+                confetti({ particleCount: 100, spread: 100, origin: { y: 0.5 } });
+                document.getElementById('quiz-screen-active').classList.add('hidden');
+                document.getElementById('quiz-screen-start').classList.remove('hidden');
+                document.getElementById('quiz-screen-start').innerHTML = `
+                    <div class="w-16 h-16 bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-emerald-300 dark:border-emerald-800">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">¡Quiz Completado!</h3>
+                    <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-md mx-auto mb-6 font-medium">
+                        Gran trabajo demostrando tu razonamiento. Tienes un total de ${totalXP} XP.
+                    </p>
+                    <button onclick="location.reload()" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-md cursor-pointer">
+                        Volver al Inicio
+                    </button>
+                `;
+            }
+        });
+
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', () => {
+            renderTopicsGrid();
+            document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+            
+            const savedTheme = localStorage.getItem('uruapanmath_3er_theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon text-base';
+            }
+        });
+    </script>
+</body>
+</html>
