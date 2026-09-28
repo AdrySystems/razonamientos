@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razonamiento Lógico Matemático • 2° Secundaria • Uruapan, Michoacán</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Lexend', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                        'pulse-subtle': 'pulseSubtle 2s infinite',
+                        'bounce-subtle': 'bounceSubtle 1.5s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(12px) scale(0.98)' },
+                            '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                        },
+                        pulseSubtle: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.02)' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-3px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f1f5f9;
+            --bg-glass: rgba(255, 255, 255, 0.94);
+            --border-main: #cbd5e1;
+            --border-subtle: #e2e8f0;
+            --text-heading: #0f172a;
+            --text-body: #1e293b;
+            --text-muted: #475569;
+            --shadow-card: 0 10px 25px -5px rgba(15, 23, 42, 0.06), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --shadow-hover: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #0b1120;
+            --bg-card: #131c31;
+            --bg-card-hover: #1e293b;
+            --bg-glass: rgba(19, 28, 49, 0.94);
+            --border-main: #334155;
+            --border-subtle: #1e293b;
+            --text-heading: #ffffff;
+            --text-body: #e2e8f0;
+            --text-muted: #cbd5e1;
+            --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 20px 40px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-body);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Lexend', sans-serif;
+            color: var(--text-heading);
+        }
+
+        .academic-glass {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border-color: var(--border-main);
+        }
+
+        .academic-card {
+            background-color: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            box-shadow: var(--shadow-card);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .academic-card:hover {
+            background-color: var(--bg-card-hover);
+            border-color: #3b82f6;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-6px) scale(1.015);
+        }
+
+        .academic-card:active {
+            transform: translateY(-2px) scale(0.985);
+        }
+
+        body.projection-mode {
+            font-size: 1.2rem !important;
+            line-height: 1.7 !important;
+        }
+
+        body.projection-mode .academic-card {
+            border-width: 2.5px !important;
+            border-color: #3b82f6 !important;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-page);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #64748b;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
+
+    <div id="projector-indicator" class="hidden bg-blue-900 text-white text-xs sm:text-sm font-bold py-2.5 px-4 text-center tracking-wide flex items-center justify-center gap-2 shadow-inner z-50">
+        <i class="fa-solid fa-display text-blue-300 animate-pulse"></i>
+        <span>MODO PROYECTOR ACTIVO — Optimizado para el Aula de Clases</span>
+        <button onclick="toggleProjectionMode()" class="ml-4 underline hover:text-blue-200 text-xs font-semibold cursor-pointer">Desactivar</button>
+    </div>
+
+    <header class="sticky top-0 z-40 academic-glass border-b transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3.5 cursor-pointer group" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-blue-600/30 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <div class="flex items-center gap-2">
+                        <span class="font-display text-base sm:text-lg font-extrabold tracking-tight text-slate-900 dark:text-white">URUAPAN<span class="text-blue-600 dark:text-blue-400">MATH</span></span>
+                        <span class="text-[11px] bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 px-2.5 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-700/80 font-extrabold">
+                            2° Secundaria
+                        </span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 text-[11px] mt-0.5">
+                        <i class="fa-solid fa-chalkboard-user text-blue-600 dark:text-blue-400"></i>
+                        <span class="text-slate-600 dark:text-slate-300 font-medium">Profesor:</span>
+                        <strong class="text-slate-900 dark:text-slate-100 font-bold">Adrian Cipriano Lara</strong>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                <a href="#temas-grid" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Retos Cotidianos</a>
+                <a href="#evaluacion" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Quiz Exprés</a>
+            </nav>
+
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button id="projection-btn" onclick="toggleProjectionMode()" class="px-3.5 py-2 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-blue-100 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer" title="Activar Modo Proyector">
+                    <i class="fa-solid fa-display text-blue-600 dark:text-blue-400"></i>
+                    <span class="hidden md:inline">Proyector</span>
+                </button>
+
+                <button id="theme-toggle-btn" onclick="toggleTheme()" class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-200/90 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 text-amber-600 dark:text-amber-400 transition-all shadow-sm focus:outline-none cursor-pointer" title="Cambiar Tema">
+                    <i id="theme-icon" class="fa-solid fa-sun text-base"></i>
+                </button>
+
+                <div class="flex items-center gap-2 bg-blue-100/90 dark:bg-blue-950/90 border border-blue-300 dark:border-blue-700/80 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm">
+                    <i class="fa-solid fa-bolt text-amber-500 dark:text-amber-400"></i>
+                    <span id="nav-xp" class="text-blue-900 dark:text-blue-200">0 XP</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-8 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-blue-950 text-white rounded-3xl p-6 sm:p-10 mb-6 shadow-2xl relative overflow-hidden border border-indigo-800/40">
+            <div class="absolute -right-16 -bottom-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
+                <div class="space-y-4 max-w-3xl">
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <span class="text-xs bg-indigo-500/30 text-indigo-100 font-extrabold px-3.5 py-1 rounded-full border border-indigo-400/40">
+                            2° de Secundaria • Razonamiento Lógico
+                        </span>
+                        <span class="text-xs bg-amber-400 text-slate-950 font-extrabold px-3.5 py-1 rounded-full shadow-sm">
+                            Uruapan, Michoacán
+                        </span>
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white leading-tight">
+                        Razonamiento Lógico con Situaciones Reales
+                    </h1>
+                    <p class="text-slate-200 text-xs sm:text-sm font-medium leading-relaxed">
+                        Retos prácticos diseñados para el segundo grado de secundaria, adaptados a situaciones de nuestro entorno en Uruapan. Fortalece tus habilidades analíticas con explicaciones detalladas y diagramas visuales paso a paso.
+                    </p>
+                </div>
+
+                <!-- Teacher Card -->
+                <div class="bg-gradient-to-br from-indigo-900/95 via-blue-950 to-slate-900/95 backdrop-blur-2xl border-2 border-indigo-400/60 p-6 rounded-3xl flex items-center gap-5 self-stretch md:self-auto shadow-2xl shadow-indigo-900/50 relative group transition-transform hover:scale-105">
+                    <div class="absolute -top-3.5 right-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black px-3.5 py-1 rounded-full uppercase tracking-wider shadow-md border border-amber-200">
+                        <i class="fa-solid fa-award mr-1"></i> Docente Titular
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 to-blue-600 text-white flex items-center justify-center font-bold text-2xl shadow-lg shadow-indigo-500/40 shrink-0 group-hover:rotate-6 transition-transform">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <div class="text-xs space-y-1.5">
+                        <span class="text-indigo-300 block text-[11px] font-extrabold uppercase tracking-widest">Matemáticas 2° Secundaria</span>
+                        <strong class="text-white text-lg sm:text-xl font-display font-black block tracking-tight">Adrian Cipriano Lara</strong>
+                        <span class="inline-flex items-center gap-1.5 text-slate-300 text-xs font-semibold pt-0.5">
+                            <i class="fa-solid fa-location-dot text-amber-400"></i> Uruapan, Michoacán
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="temas-grid" class="py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="mb-8">
+            <span class="bg-indigo-100 dark:bg-indigo-950/90 text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-700/80 text-xs px-3.5 py-1 rounded-full font-bold uppercase tracking-wider inline-block mb-2">
+                <i class="fa-solid fa-bullseye mr-1.5"></i> Retos de 2° Grado
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                Elige un Reto, Analiza y Comprueba
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-1.5 font-medium">
+                Haz clic en cualquier tarjeta para explorar el reto interactivo plenamente contextualizado en Uruapan, su diagrama visual y la comprobación de resultados.
+            </p>
+        </div>
+
+        <div id="topics-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Populated by JavaScript -->
+        </div>
+    </section>
+
+    <section id="evaluacion" class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div class="academic-card rounded-3xl p-6 sm:p-10 max-w-4xl mx-auto shadow-xl">
+            <div class="text-center mb-8">
+                <span class="text-indigo-800 dark:text-indigo-300 font-extrabold text-xs uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/90 px-3.5 py-1 rounded-full border border-indigo-300 dark:border-indigo-700/80 inline-block mb-2">Evaluación Formativa • 2° Secundaria</span>
+                <h2 class="text-2xl sm:text-3xl font-bold font-display text-slate-900 dark:text-white">
+                    Quiz Exprés de Razonamiento 2°
+                </h2>
+            </div>
+
+            <div id="quiz-screen-start" class="text-center py-6">
+                <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4 border border-indigo-300 dark:border-indigo-800 shadow-md">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <h3 class="text-xl font-bold font-display text-slate-900 dark:text-white mb-2">¿Listo para demostrar tus conocimientos?</h3>
+                <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm max-w-md mx-auto mb-6 font-medium">
+                    Responde 5 preguntas aleatorias del temario de segundo grado en Uruapan y acumula puntos XP.
+                </p>
+                <button id="btn-start-quiz" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 cursor-pointer">
+                    <i class="fa-solid fa-play mr-2"></i> Iniciar Quiz de 2° Grado
+                </button>
+            </div>
+
+            <div id="quiz-screen-active" class="hidden">
+                <div class="flex justify-between items-center mb-6 text-xs font-bold text-slate-700 dark:text-slate-200 border-b pb-3 border-slate-300 dark:border-slate-700">
+                    <span id="quiz-progress-text" class="text-indigo-800 dark:text-indigo-300">Pregunta 1 de 5</span>
+                    <span id="quiz-streak-text" class="text-amber-600 dark:text-amber-400"><i class="fa-solid fa-fire mr-1"></i> Racha: 0</span>
+                </div>
+
+                <div class="mb-6 space-y-4">
+                    <h4 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-relaxed">¿Pregunta?</h4>
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <!-- JS Populated -->
+                    </div>
+                    <button id="btn-check-quiz" class="hidden mt-6 w-full sm:w-auto mx-auto px-6 py-3 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-xs sm:text-sm cursor-not-allowed transition-all block">
+                        Selecciona una respuesta
+                    </button>
+                </div>
+
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl mb-4 text-xs sm:text-sm border font-medium animate-fade-in">
+                    <!-- JS Populated -->
+                </div>
+
+                <div class="flex justify-end">
+                    <button id="btn-next-quiz" class="hidden px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-xs sm:text-sm transition-all shadow-md cursor-pointer animate-fade-in">
+                        Siguiente Pregunta <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-300 dark:border-slate-800 py-8 text-center text-xs text-slate-600 dark:text-slate-400 space-y-2.5 mt-12 bg-slate-100/50 dark:bg-slate-900/50 font-medium">
+        <p>UruapanMath • Razonamiento Lógico-Matemático para 2° de Secundaria • Ciudad de Uruapan, Michoacán</p>
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs shadow-sm">
+            <i class="fa-solid fa-chalkboard-user text-indigo-600 dark:text-indigo-400"></i>
+            <span>Profesor Titular: <strong class="text-slate-900 dark:text-white font-bold">Adrian Cipriano Lara</strong></span>
+        </div>
+    </footer>
+
+    <div id="rule-modal" class="fixed inset-0 z-[100] hidden bg-slate-950/85 backdrop-blur-md overflow-y-auto transition-opacity duration-300 text-slate-900 dark:text-slate-100">
+        <div class="min-h-screen px-4 py-6 sm:px-8 flex flex-col justify-between max-w-4xl mx-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-300 dark:border-slate-700 mb-6">
+                <button onclick="closeFullscreenModal()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 active:scale-95 text-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-slate-100 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 shadow-sm cursor-pointer border border-slate-300 dark:border-slate-600">
+                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Volver</span>
+                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="navigateModal(-1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <span id="modal-counter-badge" class="text-xs font-bold font-mono text-indigo-800 dark:text-indigo-300 px-3.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl shadow-sm">
+                        Contenido 1
+                    </span>
+                    <button onclick="navigateModal(1)" class="p-2.5 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-white rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 cursor-pointer transition-transform active:scale-90">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="academic-card rounded-3xl p-6 sm:p-10 mb-8 shadow-2xl relative border-2 border-indigo-500/40">
+                <div class="text-center mb-6">
+                    <span id="modal-topic-category" class="inline-block px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-xs font-bold uppercase tracking-wider mb-3 border border-indigo-300 dark:border-indigo-800">
+                        Categoría
+                    </span>
+                    <!-- HIGHLIGHTED TITLE UPON OPENING -->
+                    <h2 id="modal-title" class="text-2xl sm:text-4xl font-extrabold font-display tracking-tight text-blue-700 dark:text-blue-400 leading-tight bg-blue-50 dark:bg-blue-950/50 py-3 px-6 rounded-2xl border-2 border-blue-300 dark:border-blue-700 shadow-sm inline-block w-full">
+                        Título del Reto
+                    </h2>
+                </div>
+
+                <div class="bg-slate-50 dark:bg-slate-900/90 p-5 sm:p-6 rounded-2xl border border-slate-300 dark:border-slate-700 text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-medium mb-6 shadow-sm">
+                    <p id="modal-context">Contexto detallado en Uruapan...</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 id="modal-question" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white mb-4">¿Pregunta?</h3>
+                    <div id="modal-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                        <!-- Opciones dinámicas -->
+                    </div>
+                </div>
+
+                <div class="flex justify-center mb-6">
+                    <button id="modal-submit-btn" onclick="checkModalAnswer()" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-indigo-600/30 cursor-pointer flex items-center gap-2">
+                        <i class="fa-solid fa-check"></i> Comprobar Respuesta
+                    </button>
+                </div>
+
+                <div id="modal-solution-box" class="hidden space-y-4 pt-6 border-t border-slate-300 dark:border-slate-700 animate-fade-in">
+                    <div id="modal-diagram-container"></div>
+                    <div id="modal-feedback" class="p-4 rounded-xl text-xs sm:text-sm font-medium border shadow-sm"></div>
+                </div>
+            </div>
+
+            <div class="text-center pb-4 text-xs text-slate-500 font-semibold">
+                UruapanMath • Profesor Adrian Cipriano Lara • 2° Secundaria Uruapan
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Audio synthesis utility
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+            playTone(freq, type = 'sine', duration = 0.1) {
+                try {
+                    this.init();
+                    if (this.ctx.state === 'suspended') {
+                        this.ctx.resume();
+                    }
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = type;
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + duration);
+                } catch(e) {}
+            }
+            success() {
+                this.playTone(587.33, 'triangle', 0.15);
+                setTimeout(() => this.playTone(880, 'triangle', 0.25), 120);
+            }
+            error() {
+                this.playTone(220, 'sawtooth', 0.2);
+                setTimeout(() => this.playTone(164.81, 'sawtooth', 0.3), 150);
+            }
+        }
+        const sfx = new SoundFX();
+
+        // State management
+        let totalXP = parseInt(localStorage.getItem('uruapanmath_2do_xp') || '0');
+        document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+
+        function addXP(amount) {
+            totalXP += amount;
+            localStorage.setItem('uruapanmath_2do_xp', totalXP);
+            document.getElementById('nav-xp').innerText = `${totalXP} XP`;
+            confetti({ particleCount: 40, spread: 70, origin: { y: 0.8 } });
+        }
+
+        let isProjectionMode = false;
+        function toggleProjectionMode() {
+            isProjectionMode = !isProjectionMode;
+            document.body.classList.toggle('projection-mode', isProjectionMode);
+            document.getElementById('projector-indicator').classList.toggle('hidden', !isProjectionMode);
+            sfx.playTone(isProjectionMode ? 660 : 440, 'sine', 0.1);
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', current);
+            localStorage.setItem('uruapanmath_2do_theme', current);
+            document.getElementById('theme-icon').className = current === 'light' ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+            sfx.playTone(520, 'sine', 0.05);
+        }
+
+        // 22 Topics fully contextualized in Uruapan, Michoacán
+        const topicsData = [
+            {
+                id: 1,
+                title: "1. Criterios de divisibilidad",
+                subtitle: "Extensión del significado de las operaciones",
+                icon: "fa-cubes",
+                color: "rose",
+                context: "En la empacadora de aguacates 'El Pinito', ubicada cerca del Parque Nacional Barranca del Cupatitzio en Uruapan, se preparan lotes para exportación internacional. Tienen 1,350 piezas de aguacate Hass y necesitan verificar exactamente si se pueden empaquetar en cajas de 3, 5 y 9 piezas por caja sin que sobre ninguna unidad.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Criterios de Divisibilidad en Uruapan</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-mono font-bold">
+                            <div class="p-2 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 rounded-lg border border-emerald-300">Entre 3: Suma dígitos (1+3+5+0=9) sí</div>
+                            <div class="p-2 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 rounded-lg border border-emerald-300">Entre 5: Termina en 0 o 5 sí</div>
+                            <div class="p-2 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 rounded-lg border border-emerald-300">Entre 9: Suma dígitos = 9 sí</div>
+                        </div>
+                    </div>
+                `,
+                question: "¿Es el número 1,350 divisible simultáneamente entre 3, 5 y 9 en la empacadora de Uruapan?",
+                options: ["Sí, cumple los tres criterios", "Solo entre 5 y 9", "Solo entre 3 y 5", "Ninguno de los tres"],
+                correctAnswer: 0,
+                explanation: "Termina en 0 (divisible entre 5). La suma de sus dígitos es 1+3+5+0 = 9 (divisible entre 3 y 9). Por lo tanto, cumple con los tres criterios."
+            },
+            {
+                id: 2,
+                title: "2. Máximo común divisor y mínimo común múltiplo",
+                subtitle: "Extensión del significado de las operaciones",
+                icon: "fa-faucet-drip",
+                color: "cyan",
+                context: "En una huerta modelo de producción de aguacate ubicada en las faldas de Uruapan, se utiliza un sistema de riego por goteo automatizado para optimizar el recurso hídrico. Dos válvulas principales se han programado de la siguiente manera: la primera válvula se activa cada 12 minutos y la segunda válvula se activa cada 18 minutos. Si los sensores marcan que acaban de coincidir disparando agua exactamente al mismo tiempo...",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Mínimo Común Múltiplo (m.c.m.) en Uruapan</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-900 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            Múltiplos de 12: 12, 24, 36, 48...<br>
+                            Múltiplos de 18: 18, 36, 54...<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">m.c.m.(12, 18) = 36 minutos</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿En cuántos minutos volverán a coincidir exactamente las dos válvulas de riego por primera vez en Uruapan?",
+                options: ["24 minutos", "36 minutos", "54 minutos", "72 minutos"],
+                correctAnswer: 1,
+                explanation: "Calculamos el mínimo común múltiplo (m.c.m.) de 12 y 18. Al descomponer en factores primos, encontramos que coinciden exactamente cada 36 minutos."
+            },
+            {
+                id: 3,
+                title: "3. Potencias y raíz cuadrada",
+                subtitle: "Extensión del significado de las operaciones",
+                icon: "fa-vector-square",
+                color: "amber",
+                context: "Un terreno rectangular de cultivo de café orgánico en las faldas del Parque Nacional Barranca del Cupatitzio en Uruapan tiene forma estrictamente cuadrada y su área total mide exactamente 529 metros cuadrados.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Cálculo de Raíz Cuadrada en Uruapan</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-sm">
+                            Área = Lado² = 529 m²<br>
+                            Lado = √529 = <span class="text-emerald-600 dark:text-emerald-400 font-black">23 metros</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la longitud exacta de cada uno de los lados del terreno cafetalero en Uruapan?",
+                options: ["21 metros", "23 metros", "25 metros", "27 metros"],
+                correctAnswer: 1,
+                explanation: "Para hallar el lado de un terreno cuadrado conociendo su área, calculamos la raíz cuadrada. Sabemos que 23 x 23 = 529, por lo que la raíz de 529 es 23."
+            },
+            {
+                id: 4,
+                title: "4. Sucesión con progresión cuadrática",
+                subtitle: "Regularidades y patrones",
+                icon: "fa-layer-group",
+                color: "emerald",
+                context: "En el diseño de la ornamentación floral para el tradicional Festival de las Velas en el Centro Histórico de Uruapan, se colocan arreglos de luces con la siguiente sucesión numérica cuadrática de elementos por sección: 3, 8, 15, 24, ...",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Diferencias Sucesivas en Uruapan</div>
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 rounded-xl border border-emerald-300 font-mono font-bold text-xs space-y-1">
+                            <div>Términos: 3, &nbsp;&nbsp; 8, &nbsp;&nbsp; 15, &nbsp;&nbsp; 24, &nbsp;&nbsp; <span class="text-emerald-600 font-bold">35</span></div>
+                            <div>1ª Diferencia: &nbsp;&nbsp; 5, &nbsp;&nbsp; 7, &nbsp;&nbsp; 9, &nbsp;&nbsp; <span class="text-blue-600 font-bold">11</span></div>
+                            <div>2ª Diferencia Constante: &nbsp;&nbsp; 2, &nbsp;&nbsp; 2</div>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué número continúa exactamente en la sucesión del festival en Uruapan?",
+                options: ["33", "35", "36", "40"],
+                correctAnswer: 1,
+                explanation: "Las diferencias consecutivas son 5, 7, 9... La segunda diferencia es constante (+2). La siguiente diferencia es 9 + 2 = 11. Sumando 24 + 11 obtenemos 35."
+            },
+            {
+                id: 5,
+                title: "5. Expresiones algebraicas de segundo grado equivalentes",
+                subtitle: "Introducción al álgebra",
+                icon: "fa-table-cells-large",
+                color: "orange",
+                context: "Un vivero de plantas ornamentales ubicado sobre la Calzada Juárez en Uruapan distribuye parcelas rectangulares. Su área total factorizada se expresa matemáticamente como 3(x + 4)² metros cuadrados.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Desarrollo Algebraico en Uruapan</div>
+                        <div class="p-3 bg-orange-50 dark:bg-orange-950/80 text-orange-900 dark:text-orange-200 rounded-xl border border-orange-300 font-mono font-bold text-xs">
+                            3(x + 4)² = 3(x² + 8x + 16)<br>
+                            = <span class="text-emerald-600 dark:text-emerald-400 font-bold">3x² + 24x + 48</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la expresión cuadrática equivalente desarrollada para el vivero en Uruapan?",
+                options: ["3x² + 12x + 16", "3x² + 24x + 48", "3x² + 8x + 16", "9x² + 24x + 48"],
+                correctAnswer: 1,
+                explanation: "Desarrollamos el binomio al cuadrado: (x+4)² = x² + 8x + 16. Al multiplicar por 3 obtenemos: 3x² + 24x + 48."
+            },
+            {
+                id: 6,
+                title: "6. Propiedades de potencias con exponente entero",
+                subtitle: "Introducción al álgebra",
+                icon: "fa-superscript",
+                color: "fuchsia",
+                context: "En el laboratorio biológico del CBTis de Uruapan se calcula el crecimiento de un cultivo bacteriano con la expresión exponencial (5³)⁴ ÷ (5²)⁵.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Leyes de Potencias en Uruapan</div>
+                        <div class="p-3 bg-fuchsia-50 dark:bg-fuchsia-950/80 text-fuchsia-900 dark:text-fuchsia-200 rounded-xl border border-fuchsia-300 font-mono font-bold text-xs">
+                            (5³)⁴ = 5¹²<br>
+                            (5²)⁵ = 5¹⁰<br>
+                            5¹² ÷ 5¹⁰ = 5¹²⁻¹⁰ = <span class="text-emerald-600 dark:text-emerald-400 font-bold">5² = 25</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el resultado numérico simplificado del cultivo bacteriano en Uruapan?",
+                options: ["5", "25", "125", "625"],
+                correctAnswer: 1,
+                explanation: "Aplicamos potencia de una potencia (multiplicando exponentes: 3x4=12 y 2x5=10). En división de la misma base, se restan: 12 - 10 = 2. Queda 5² = 25."
+            },
+            {
+                id: 7,
+                title: "7. Desigualdades lineales",
+                subtitle: "Introducción al álgebra",
+                icon: "fa-scale-unbalanced",
+                color: "sky",
+                context: "Para remodelar un local comercial en el Centro Histórico de Uruapan tienes un presupuesto máximo de $500 pesos. Cada kilo de clavos industriales en la ferretería local cuesta $45 pesos y el flete de entrega en la zona es de $50 pesos fijos.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Desigualdad Lineal en Uruapan</div>
+                        <div class="p-3 bg-sky-50 dark:bg-sky-950/80 text-sky-900 dark:text-sky-200 rounded-xl border border-sky-300 font-mono font-bold text-xs">
+                            45x + 50 ≤ 500<br>
+                            45x ≤ 450<br>
+                            x ≤ <span class="text-emerald-600 dark:text-emerald-400 font-bold">10 kilos</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el número máximo de kilos enteros de clavos que puedes comprar en Uruapan?",
+                options: ["8 kilos", "9 kilos", "10 kilos", "11 kilos"],
+                correctAnswer: 2,
+                explanation: "Planteamos la inecuación: 45x + 50 <= 500. Restamos 50: 45x <= 450. Dividimos entre 45: x <= 10 kilos."
+            },
+            {
+                id: 8,
+                title: "8. Sistemas de ecuaciones 2x2: método gráfico",
+                subtitle: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-chart-area",
+                color: "indigo",
+                context: "Al trazar las rutas de entrega de dos camiones repartidores de aguacate desde la Central de Abastos de Uruapan en el plano cartesiano, las rectas de trayectoria se cruzan exactamente en el punto (3, 4).",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Método Gráfico 2x2 en Uruapan</div>
+                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-900 dark:text-indigo-200 rounded-xl border border-indigo-300 font-mono font-bold text-xs">
+                            Punto de intersección de las rutas:<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">x = 3, y = 4 (Solución única)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué representa el punto de intersección de las rutas en el plano de Uruapan?",
+                options: ["La solución única del sistema de rutas", "Que las rutas no se cruzan", "Infinitas coincidencias", "El área del parque"],
+                correctAnswer: 0,
+                explanation: "En el método gráfico, el punto donde se intersectan las dos rectas corresponde a los valores que satisfacen ambas ecuaciones de ruta simultáneamente."
+            },
+            {
+                id: 9,
+                title: "9. Sistemas de ecuaciones 2x2: métodos algebraicos",
+                subtitle: "Ecuaciones lineales y cuadráticas",
+                icon: "fa-code-merge",
+                color: "blue",
+                context: "En el Mercado Municipal 'Díaz Mirón' de Uruapan, 2 kg de aguacate y 3 kg de limón cuestan $160 pesos. Además, 4 kg de aguacate y 1 kg de limón cuestan $180 pesos.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Métodos Algebraicos 2x2 en Uruapan</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-900 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            1) 2x + 3y = 160<br>
+                            2) 4x + y = 180<br>
+                            <span class="text-emerald-600 dark:text-emerald-400 font-bold">Solución: Aguacate (x) = $40, Limón (y) = $20</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el precio por kilo del aguacate (x) en el mercado de Uruapan?",
+                options: ["$30", "$35", "$40", "$50"],
+                correctAnswer: 2,
+                explanation: "Resolviendo por sistemas algebraicos: x = $40 el kilo de aguacate y y = $20 el kilo de limón."
+            },
+            {
+                id: 10,
+                title: "10. Proporcionalidad directa e inversa",
+                subtitle: "Funciones",
+                icon: "fa-users-gear",
+                color: "teal",
+                context: "Para la construcción de un puente peatonal sobre el río Cupatitzio en Uruapan, 6 albañiles tardan 12 días en concluir la obra inicial.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Proporcionalidad Inversa en Uruapan</div>
+                        <div class="p-3 bg-teal-50 dark:bg-teal-950/80 text-teal-900 dark:text-teal-200 rounded-xl border border-teal-300 font-mono font-bold text-xs">
+                            Más trabajadores $\implies$ Menos días<br>
+                            6 albañiles × 12 días = 72 total-días<br>
+                            72 ÷ 9 albañiles = <span class="text-emerald-600 dark:text-emerald-400 font-bold">8 días</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos días tardarán 9 albañiles trabajando al mismo ritmo en Uruapan?",
+                options: ["6 días", "8 días", "9 días", "10 días"],
+                correctAnswer: 1,
+                explanation: "Es una relación inversamente proporcional. Multiplicamos 6 * 12 = 72. Dividimos entre el nuevo personal: 72 / 9 = 8 días."
+            },
+            {
+                id: 11,
+                title: "11. Rectas y ángulos",
+                subtitle: "Rectas y ángulos",
+                icon: "fa-compass-drafting",
+                color: "violet",
+                context: "En la estructura metálica del kiosco de la Plaza Mártires de Uruapan, dos vigas se cruzan formando ángulos suplementarios. Si uno de los ángulos mide 115°...",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Ángulos Suplementarios en Uruapan</div>
+                        <div class="p-3 bg-violet-50 dark:bg-violet-950/80 text-violet-900 dark:text-violet-200 rounded-xl border border-violet-300 font-mono font-bold text-xs">
+                            Ángulos suplementarios suman 180°<br>
+                            180° - 115° = <span class="text-emerald-600 dark:text-emerald-400 font-bold">65°</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuánto mide su ángulo adyacente suplementario en la plaza de Uruapan?",
+                options: ["55°", "65°", "75°", "85°"],
+                correctAnswer: 1,
+                explanation: "Dos ángulos son suplementarios cuando suman 180°. Restamos: 180° - 115° = 65°."
+            },
+            {
+                id: 12,
+                title: "12. Construcción de polígonos",
+                subtitle: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-draw-polygon",
+                color: "pink",
+                context: "Para la remodelación de la fuente principal de La Huatápera en Uruapan, se diseña un jardín ornamental con forma de polígono regular cuyo ángulo central mide exactamente 60°.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Ángulo Central en Uruapan</div>
+                        <div class="p-3 bg-pink-50 dark:bg-pink-950/80 text-pink-900 dark:text-pink-200 rounded-xl border border-pink-300 font-mono font-bold text-xs">
+                            n = 360° ÷ Ángulo central<br>
+                            n = 360° ÷ 60° = <span class="text-emerald-600 dark:text-emerald-400 font-bold">6 lados (Hexágono)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos lados tiene este polígono regular diseñado para La Huatápera en Uruapan?",
+                options: ["5 lados (Pentágono)", "6 lados (Hexágono)", "8 lados (Octágono)", "10 lados (Decágono)"],
+                correctAnswer: 1,
+                explanation: "Dividimos 360° entre el ángulo central: 360° / 60° = 6 lados (hexágono regular)."
+            },
+            {
+                id: 13,
+                title: "13. Teselados",
+                subtitle: "Construcción y propiedades de las figuras planas y cuerpos",
+                icon: "fa-shapes",
+                color: "lime",
+                context: "Para el diseño de los adoquines decorativos en el Paseo Lázaro Cárdenas de Uruapan, se planea un teselado regular donde los ángulos internos de cada pieza miden 120°.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Teselados Regulares en Uruapan</div>
+                        <div class="p-3 bg-lime-50 dark:bg-lime-950/80 text-lime-900 dark:text-lime-200 rounded-xl border border-lime-300 font-mono font-bold text-xs">
+                            360° ÷ 120° = 3 piezas exactas por vértice<br>
+                            Polígono: <span class="text-emerald-600 dark:text-emerald-400 font-bold">Hexágono regular</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Qué polígono regular se está utilizando para pavimentar el Paseo Lázaro Cárdenas en Uruapan?",
+                options: ["Triángulo equilátero", "Cuadrado", "Hexágono regular", "Pentágono regular"],
+                correctAnswer: 2,
+                explanation: "El hexágono regular tiene ángulos internos de 120°. Al juntar 3 hexágonos en un vértice, 3 * 120° = 360°, cubriendo todo el plano sin dejar huecos."
+            },
+            {
+                id: 14,
+                title: "14. Circunferencia y círculo",
+                subtitle: "Circunferencia, círculo y esfera",
+                icon: "fa-globe",
+                color: "amber",
+                context: "La glorieta principal de la Colonia Cupatitzio en Uruapan tiene forma circular con un diámetro de 20 metros. Calcula su longitud (perímetro) usando π ≈ 3.1416.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Circunferencia en Uruapan</div>
+                        <div class="p-3 bg-amber-50 dark:bg-amber-950/80 text-amber-900 dark:text-amber-200 rounded-xl border border-amber-300 font-mono font-bold text-xs">
+                            C = π × d = 3.1416 × 20 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">62.83 metros</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la longitud de la circunferencia de la glorieta en Uruapan?",
+                options: ["31.42 m", "62.83 m", "125.66 m", "314.16 m"],
+                correctAnswer: 1,
+                explanation: "La fórmula es C = pi * d. Al multiplicar 3.1416 * 20 obtenemos 62.83 metros."
+            },
+            {
+                id: 15,
+                title: "15. Múltiplos y submúltiplos del S.I.",
+                subtitle: "Medición y cálculo en diferentes contextos",
+                icon: "fa-ruler",
+                color: "cyan",
+                context: "Un artesano de la comunidad de San Pedro en Uruapan necesita cortar listones de madera para artesanías de maque tradicional. Mide una viga de 3.5 metros y requiere calcular su equivalente exacto en milímetros.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Unidades S.I. en Uruapan</div>
+                        <div class="p-3 bg-cyan-50 dark:bg-cyan-950/80 text-cyan-900 dark:text-cyan-200 rounded-xl border border-cyan-300 font-mono font-bold text-xs">
+                            1 metro = 1,000 milímetros<br>
+                            3.5 m × 1,000 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">3,500 mm</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuántos milímetros equivalen a los 3.5 metros de madera en el taller de Uruapan?",
+                options: ["35 mm", "350 mm", "3,500 mm", "35,000 mm"],
+                correctAnswer: 2,
+                explanation: "Multiplicamos 3.5 por 1,000 para obtener 3,500 mm."
+            },
+            {
+                id: 16,
+                title: "16. Conversión entre unidades inglesas y S.I.",
+                subtitle: "Medición y cálculo en diferentes contextos",
+                icon: "fa-right-left",
+                color: "teal",
+                context: "En la ferretería 'La Nacional' en Uruapan, se venden refacciones importadas para maquinaria agrícola. Una barra de transmisión mide exactamente 5 pulgadas de largo. Si 1 pulgada equivale a 2.54 cm...",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Conversión en Uruapan</div>
+                        <div class="p-3 bg-teal-50 dark:bg-teal-950/80 text-teal-900 dark:text-teal-200 rounded-xl border border-teal-300 font-mono font-bold text-xs">
+                            5 pulgadas × 2.54 cm = <span class="text-emerald-600 dark:text-emerald-400 font-bold">12.7 cm</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿A cuántos centímetros equivalen las 5 pulgadas de la refacción en Uruapan?",
+                options: ["10.5 cm", "12.7 cm", "15.0 cm", "25.4 cm"],
+                correctAnswer: 1,
+                explanation: "Multiplicamos 5 * 2.54 = 12.7 cm."
+            },
+            {
+                id: 17,
+                title: "17. Perímetro y área de figuras compuestas",
+                subtitle: "Medición y cálculo en diferentes contextos",
+                icon: "fa-shapes",
+                color: "rose",
+                context: "Calcula el área de una bodega de acopio de aguacate en Uruapan cuya planta arquitectónica está compuesta por un rectángulo de 6 m de largo por 4 m de ancho y un techo triangular superior con base de 6 m y altura de 3 m.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Áreas Compuestas en Uruapan</div>
+                        <div class="p-3 bg-rose-50 dark:bg-rose-950/80 text-rose-900 dark:text-rose-200 rounded-xl border border-rose-300 font-mono font-bold text-xs">
+                            Área rectángulo = 6 × 4 = 24 m²<br>
+                            Área triángulo = (6 × 3) ÷ 2 = 9 m²<br>
+                            Área total = 24 + 9 = <span class="text-emerald-600 dark:text-emerald-400 font-bold">33 m²</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el área total de la bodega de aguacate en Uruapan?",
+                options: ["27 m²", "30 m²", "33 m²", "36 m²"],
+                correctAnswer: 2,
+                explanation: "Sumamos 24 m² + 9 m² = 33 m²."
+            },
+            {
+                id: 18,
+                title: "18. Histogramas y gráficas de línea",
+                subtitle: "Obtención y representación de información",
+                icon: "fa-chart-column",
+                color: "sky",
+                context: "En el observatorio meteorológico de Uruapan se registra el comportamiento de las lluvias semanales mediante puntos en un plano cartesiano unidos por segmentos rectos.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Gráficas en Uruapan</div>
+                        <div class="p-3 bg-sky-50 dark:bg-sky-950/80 text-sky-900 dark:text-sky-200 rounded-xl border border-sky-300 font-mono font-bold text-xs">
+                            Puntos conectados por segmentos = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Gráfica de línea</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cómo se llama la gráfica que utiliza puntos unidos por líneas para mostrar las tendencias de lluvia en Uruapan?",
+                options: ["Histograma", "Gráfica de línea", "Diagrama circular", "Pictograma"],
+                correctAnswer: 1,
+                explanation: "Una gráfica de línea conecta puntos de datos con segmentos rectos para mostrar cambios a lo largo del tiempo."
+            },
+            {
+                id: 19,
+                title: "19. Medidas de tendencia central y dispersión",
+                subtitle: "Interpretación de la información a través de medidas de tendencia central y dispersión",
+                icon: "fa-chart-pie",
+                color: "indigo",
+                context: "Dada la serie de calificaciones bimestrales de un grupo de secundaria en una escuela de Uruapan: 7, 8, 8, 9, 10. Calcula la moda y la mediana.",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Tendencia Central en Uruapan</div>
+                        <div class="p-3 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-900 dark:text-indigo-200 rounded-xl border border-indigo-300 font-mono font-bold text-xs">
+                            Datos ordenados: 7, 8, 8, 9, 10<br>
+                            Moda = 8 | Mediana = <span class="text-emerald-600 dark:text-emerald-400 font-bold">8</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es el valor de la moda y la mediana en este grupo escolar de Uruapan?",
+                options: ["Moda: 8, Mediana: 8", "Moda: 9, Mediana: 8", "Moda: 8, Mediana: 9", "Moda: 10, Mediana: 8"],
+                correctAnswer: 0,
+                explanation: "El número más frecuente (moda) es 8 y el valor central (mediana) también es 8."
+            },
+            {
+                id: 20,
+                title: "20. Valores representativos de grupos de datos",
+                subtitle: "Interpretación de la información a través de medidas de tendencia central y dispersión",
+                icon: "fa-users",
+                color: "fuchsia",
+                context: "Para comparar el rendimiento académico general de dos secundarias técnicas diferentes en Uruapan con distinto número de alumnos, ¿qué medida es más representativa para hallar el promedio por grupo?",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Valores en Uruapan</div>
+                        <div class="p-3 bg-fuchsia-50 dark:bg-fuchsia-950/80 text-fuchsia-900 dark:text-fuchsia-200 rounded-xl border border-fuchsia-300 font-mono font-bold text-xs">
+                            Media aritmética = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Valor representativo global</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la medida de tendencia central más empleada como valor representativo global en las escuelas de Uruapan?",
+                options: ["La moda", "La media aritmética", "El rango", "La desviación estándar"],
+                correctAnswer: 1,
+                explanation: "La media aritmética (promedio) es la medida de tendencia central más utilizada para representar grupos de datos."
+            },
+            {
+                id: 21,
+                title: "21. Probabilidad frecuencial y clásica",
+                subtitle: "Azar e incertidumbre en la ocurrencia de eventos cotidianos",
+                icon: "fa-dice",
+                color: "emerald",
+                context: "En la feria tradicional de Domingo de Ramos en Uruapan, se utiliza un dado legal de 6 caras numeradas del 1 al 6 en un juego de lotería local. ¿Cuál es la probabilidad clásica de obtener un número par (2, 4 o 6)?",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Probabilidad en Uruapan</div>
+                        <div class="p-3 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 rounded-xl border border-emerald-300 font-mono font-bold text-xs">
+                            Casos favorables (3) ÷ Totales (6) = <span class="text-emerald-600 dark:text-emerald-400 font-bold">1/2 (50%)</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cuál es la probabilidad clásica de obtener un número par en el juego de feria en Uruapan?",
+                options: ["1/3", "1/2 (50%)", "2/3", "1/6"],
+                correctAnswer: 1,
+                explanation: "Hay 3 números pares de un total de 6 caras. Simplificando 3/6 obtenemos 1/2 o 50%."
+            },
+            {
+                id: 22,
+                title: "22. Medición de la probabilidad",
+                subtitle: "Azar e incertidumbre en la ocurrencia de eventos cotidianos",
+                icon: "fa-gauge-high",
+                color: "blue",
+                context: "Al analizar el clima en Uruapan durante la temporada de lluvias, si la probabilidad matemática de que llueva en el día es exactamente 1 (o 100%), ¿cómo se le denomina a este tipo de evento?",
+                diagram: `
+                    <div class="p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-300 dark:border-slate-700 text-center space-y-2">
+                        <div class="text-xs font-bold text-indigo-800 dark:text-indigo-300 uppercase tracking-wider">Medición en Uruapan</div>
+                        <div class="p-3 bg-blue-50 dark:bg-blue-950/80 text-blue-900 dark:text-blue-200 rounded-xl border border-blue-300 font-mono font-bold text-xs">
+                            Probabilidad = 1 (100%) = <span class="text-emerald-600 dark:text-emerald-400 font-bold">Evento seguro</span>
+                        </div>
+                    </div>
+                `,
+                question: "¿Cómo se le llama en estadística a un evento meteorológico en Uruapan cuya probabilidad de ocurrencia es igual a 1?",
+                options: ["Evento imposible", "Evento aleatorio", "Evento seguro", "Evento complementario"],
+                correctAnswer: 2,
+                explanation: "Un valor de 1 indica certeza absoluta de ocurrencia, denominándose evento seguro."
+            }
+        ];
+
+        let currentModalIdx = 0;
+        let selectedModalOption = null;
+        let isModalRevealed = false;
+
+        function getIconColors(colorName) {
+            const map = {
+                'rose': 'bg-rose-100 dark:bg-rose-950 text-rose-600 dark:text-rose-400 border-rose-300 dark:border-rose-800',
+                'cyan': 'bg-cyan-100 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400 border-cyan-300 dark:border-cyan-800',
+                'amber': 'bg-amber-100 dark:bg-amber-950 text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800',
+                'emerald': 'bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800',
+                'orange': 'bg-orange-100 dark:bg-orange-950 text-orange-600 dark:text-orange-400 border-orange-300 dark:border-orange-800',
+                'fuchsia': 'bg-fuchsia-100 dark:bg-fuchsia-950 text-fuchsia-600 dark:text-fuchsia-400 border-fuchsia-300 dark:border-fuchsia-800',
+                'sky': 'bg-sky-100 dark:bg-sky-950 text-sky-600 dark:text-sky-400 border-sky-300 dark:border-sky-800',
+                'indigo': 'bg-indigo-100 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 border-indigo-300 dark:border-indigo-800',
+                'teal': 'bg-teal-100 dark:bg-teal-950 text-teal-600 dark:text-teal-400 border-teal-300 dark:border-teal-800',
+                'blue': 'bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 border-blue-300 dark:border-blue-800',
+                'violet': 'bg-violet-100 dark:bg-violet-950 text-violet-600 dark:text-violet-400 border-violet-300 dark:border-violet-800',
+                'pink': 'bg-pink-100 dark:bg-pink-950 text-pink-600 dark:text-pink-400 border-pink-300 dark:border-pink-800',
+                'lime': 'bg-lime-100 dark:bg-lime-950 text-lime-600 dark:text-lime-400 border-lime-300 dark:border-lime-800',
+            };
+            return map[colorName] || map['indigo'];
+        }
+
+        function renderTopicsGrid() {
+            const container = document.getElementById('topics-container');
+            container.innerHTML = '';
+
+            topicsData.forEach((topic, idx) => {
+                const colorClasses = getIconColors(topic.color);
+                const card = document.createElement('div');
+                card.className = "academic-card rounded-2xl p-5 cursor-pointer relative group flex flex-col h-full transform active:scale-95 transition-all";
+                card.onclick = () => openFullscreenModal(idx);
+                card.innerHTML = `
+                    <div class="absolute top-4 right-4 text-slate-400 group-hover:text-blue-600 transition-colors">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl ${colorClasses} border flex items-center justify-center text-xl mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                        <i class="fa-solid ${topic.icon}"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-slate-900 dark:text-white text-base mb-1.5 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${topic.title}</h3>
+                    <p class="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-3"><i class="fa-solid fa-location-dot mr-1"></i> ${topic.subtitle}</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 line-clamp-3 leading-relaxed flex-grow font-medium">${topic.context}</p>
+                    <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-slate-500">
+                        <span>Ver Reto en Uruapan</span>
+                        <div class="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openFullscreenModal(idx) {
+            currentModalIdx = idx;
+            selectedModalOption = null;
+            isModalRevealed = false;
+            
+            const topic = topicsData[idx];
+            document.getElementById('modal-counter-badge').innerText = `Reto ${idx + 1} de ${topicsData.length}`;
+            document.getElementById('modal-topic-category').innerText = topic.subtitle;
+            
+            // HIGHLIGHTED TITLE UPON OPENING
+            document.getElementById('modal-title').innerText = topic.title;
+            document.getElementById('modal-context').innerText = topic.context;
+            document.getElementById('modal-question').innerHTML = `<i class="fa-solid fa-circle-question text-blue-600 mr-1.5"></i> ${topic.question}`;
+            
+            const optionsContainer = document.getElementById('modal-options');
+            optionsContainer.innerHTML = topic.options.map((opt, i) => `
+                <button id="modal-opt-${i}" onclick="selectModalOption(${i})" class="w-full text-left px-4 py-3 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-blue-500 transition-all text-xs sm:text-sm font-semibold flex items-center gap-3 text-slate-800 dark:text-slate-200 cursor-pointer active:scale-98">
+                    <span id="modal-opt-letter-${i}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-[11px] font-bold">${String.fromCharCode(65 + i)}</span>
+                    <span>${opt}</span>
+                </button>
+            `).join('');
+
+            document.getElementById('modal-solution-box').classList.add('hidden');
+            document.getElementById('modal-submit-btn').classList.remove('hidden');
+            document.getElementById('rule-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            sfx.playTone(400, 'sine', 0.08);
+        }
+
+        function closeFullscreenModal() {
+            document.getElementById('rule-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            sfx.playTone(300, 'sine', 0.06);
+        }
+
+        function navigateModal(dir) {
+            let newIdx = currentModalIdx + dir;
+            if (newIdx < 0) newIdx = topicsData.length - 1;
+            if (newIdx >= topicsData.length) newIdx = 0;
+            openFullscreenModal(newIdx);
+        }
+
+        function selectModalOption(i) {
+            if (isModalRevealed) return;
+            selectedModalOption = i;
+            const topic = topicsData[currentModalIdx];
+            topic.options.forEach((_, idx) => {
+                const btn = document.getElementById(`modal-opt-${idx}`);
+                const letter = document.getElementById(`modal-opt-letter-${idx}`);
+                if (idx === i) {
+                    btn.classList.add('border-blue-600', 'bg-blue-50', 'dark:bg-blue-950/60');
+                    letter.classList.add('bg-blue-600', 'text-white');
+                } else {
+                    btn.classList.remove('border-blue-600', 'bg-blue-50', 'dark:bg-blue-950/60');
+                    letter.classList.remove('bg-blue-600', 'text-white');
+                }
+            });
+            sfx.playTone(500, 'sine', 0.04);
+        }
+
+        function checkModalAnswer() {
+            if (selectedModalOption === null) {
+                sfx.error();
+                return;
+            }
+            isModalRevealed = true;
+            const topic = topicsData[currentModalIdx];
+            const isCorrect = (selectedModalOption === topic.correctAnswer);
+
+            topic.options.forEach((_, i) => {
+                const btn = document.getElementById(`modal-opt-${i}`);
+                const letter = document.getElementById(`modal-opt-letter-${i}`);
+                btn.disabled = true;
+                if (i === topic.correctAnswer) {
+                    btn.className = "w-full text-left px-4 py-3 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                    letter.className = "w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold";
+                } else if (i === selectedModalOption && !isCorrect) {
+                    btn.className = "w-full text-left px-4 py-3 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/80 text-rose-950 dark:text-rose-200 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                    letter.className = "w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-[11px] font-bold";
+                } else {
+                    btn.className = "w-full text-left px-4 py-3 rounded-xl border-2 border-slate-300 dark:border-slate-700 opacity-50 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                }
+            });
+
+            document.getElementById('modal-submit-btn').classList.add('hidden');
+            document.getElementById('modal-diagram-container').innerHTML = topic.diagram;
+            
+            const feedback = document.getElementById('modal-feedback');
+            feedback.classList.remove('hidden');
+            if (isCorrect) {
+                sfx.success();
+                addXP(50);
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium border bg-emerald-50 dark:bg-emerald-950/90 border-emerald-300 dark:border-emerald-800 text-emerald-950 dark:text-emerald-200 shadow-sm";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold text-base mb-1.5"><i class="fa-solid fa-circle-check text-xl"></i> ¡Respuesta Correcta (+50 XP)!</div><p>${topic.explanation}</p>`;
+            } else {
+                sfx.error();
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium border bg-rose-50 dark:bg-rose-950/90 border-rose-300 dark:border-rose-800 text-rose-950 dark:text-rose-200 shadow-sm";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold text-base mb-1.5"><i class="fa-solid fa-circle-xmark text-xl"></i> Respuesta Incorrecta</div><p>La opción correcta era la <strong>${String.fromCharCode(65 + topic.correctAnswer)}</strong>. ${topic.explanation}</p>`;
+            }
+            document.getElementById('modal-solution-box').classList.remove('hidden');
+        }
+
+        // Quiz Minigame Logic
+        let quizActive = false;
+        let quizCurrentIndex = 0;
+        let quizScore = 0;
+        let quizStreak = 0;
+        let quizQuestions = [];
+        let quizSelectedAnswer = null;
+        let quizAnswerLocked = false;
+
+        document.getElementById('btn-start-quiz').onclick = () => {
+            quizActive = true;
+            quizCurrentIndex = 0;
+            quizScore = 0;
+            quizStreak = 0;
+            quizQuestions = [...topicsData].sort(() => 0.5 - Math.random()).slice(0, 5);
+            document.getElementById('quiz-screen-start').classList.add('hidden');
+            document.getElementById('quiz-screen-active').classList.remove('hidden');
+            loadQuizQuestion();
+            sfx.playTone(523.25, 'sine', 0.1);
+        };
+
+        function loadQuizQuestion() {
+            quizSelectedAnswer = null;
+            quizAnswerLocked = false;
+            const q = quizQuestions[quizCurrentIndex];
+            document.getElementById('quiz-progress-text').innerText = `Pregunta ${quizCurrentIndex + 1} de 5`;
+            document.getElementById('quiz-streak-text').innerHTML = `<i class="fa-solid fa-fire mr-1"></i> Racha: ${quizStreak}`;
+            document.getElementById('quiz-question').innerText = q.question;
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('btn-next-quiz').classList.add('hidden');
+            
+            const btnCheck = document.getElementById('btn-check-quiz');
+            btnCheck.classList.remove('hidden', 'bg-blue-600', 'hover:bg-blue-700', 'text-white', 'cursor-pointer');
+            btnCheck.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
+            btnCheck.innerText = 'Selecciona una respuesta';
+            btnCheck.disabled = true;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = q.options.map((opt, i) => `
+                <button onclick="selectQuizOption(${i})" id="quiz-opt-${i}" class="w-full text-left p-4 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-blue-500 transition-all text-xs sm:text-sm font-semibold flex items-center gap-3 text-slate-800 dark:text-slate-200 cursor-pointer active:scale-98">
+                    <span id="quiz-letter-${i}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 flex items-center justify-center text-[11px] font-bold">${String.fromCharCode(65 + i)}</span>
+                    <span>${opt}</span>
+                </button>
+            `).join('');
+        }
+
+        function selectQuizOption(i) {
+            if (quizAnswerLocked) return;
+            quizSelectedAnswer = i;
+            const q = quizQuestions[quizCurrentIndex];
+            q.options.forEach((_, idx) => {
+                const btn = document.getElementById(`quiz-opt-${idx}`);
+                const letter = document.getElementById(`quiz-letter-${idx}`);
+                if (idx === i) {
+                    btn.classList.add('border-blue-600', 'bg-blue-50', 'dark:bg-blue-950/60');
+                    letter.classList.add('bg-blue-600', 'text-white');
+                } else {
+                    btn.classList.remove('border-blue-600', 'bg-blue-50', 'dark:bg-blue-950/60');
+                    letter.classList.remove('bg-blue-600', 'text-white');
+                }
+            });
+
+            const btnCheck = document.getElementById('btn-check-quiz');
+            btnCheck.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
+            btnCheck.classList.add('bg-blue-600', 'hover:bg-blue-700', 'text-white', 'cursor-pointer', 'shadow-md');
+            btnCheck.innerText = 'Comprobar Respuesta';
+            btnCheck.disabled = false;
+            btnCheck.onclick = checkQuizAnswer;
+            sfx.playTone(440, 'sine', 0.04);
+        }
+
+        function checkQuizAnswer() {
+            if (quizSelectedAnswer === null || quizAnswerLocked) return;
+            quizAnswerLocked = true;
+            const q = quizQuestions[quizCurrentIndex];
+            const isCorrect = (quizSelectedAnswer === q.correctAnswer);
+
+            q.options.forEach((_, i) => {
+                const btn = document.getElementById(`quiz-opt-${i}`);
+                const letter = document.getElementById(`quiz-letter-${i}`);
+                btn.disabled = true;
+                if (i === q.correctAnswer) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/80 text-emerald-950 dark:text-emerald-200 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                    letter.className = "w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-[11px] font-bold";
+                } else if (i === quizSelectedAnswer && !isCorrect) {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/80 text-rose-950 dark:text-rose-200 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                    letter.className = "w-7 h-7 rounded-lg bg-rose-600 text-white flex items-center justify-center text-[11px] font-bold";
+                } else {
+                    btn.className = "w-full text-left p-4 rounded-xl border-2 border-slate-300 dark:border-slate-700 opacity-50 bg-slate-50 dark:bg-slate-900 text-xs sm:text-sm font-semibold flex items-center gap-3";
+                }
+            });
+
+            document.getElementById('btn-check-quiz').classList.add('hidden');
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+
+            if (isCorrect) {
+                sfx.success();
+                quizScore += 20;
+                quizStreak++;
+                addXP(25);
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium border bg-emerald-50 dark:bg-emerald-950/90 border-emerald-300 dark:border-emerald-800 text-emerald-950 dark:text-emerald-200 shadow-sm";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold text-base mb-1"><i class="fa-solid fa-circle-check text-lg"></i> ¡Correcto! (+25 XP)</div><p>${q.explanation}</p>`;
+            } else {
+                sfx.error();
+                quizStreak = 0;
+                feedback.className = "p-4 rounded-xl text-xs sm:text-sm font-medium border bg-rose-50 dark:bg-rose-950/90 border-rose-300 dark:border-rose-800 text-rose-950 dark:text-rose-200 shadow-sm";
+                feedback.innerHTML = `<div class="flex items-center gap-2 font-bold text-base mb-1"><i class="fa-solid fa-circle-xmark text-lg"></i> Incorrecto</div><p>Era la opción <strong>${String.fromCharCode(65 + q.correctAnswer)}</strong>. ${q.explanation}</p>`;
+            }
+
+            document.getElementById('quiz-streak-text').innerHTML = `<i class="fa-solid fa-fire mr-1"></i> Racha: ${quizStreak}`;
+            document.getElementById('btn-next-quiz').classList.remove('hidden');
+        }
+
+        document.getElementById('btn-next-quiz').onclick = () => {
+            quizCurrentIndex++;
+            if (quizCurrentIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                document.getElementById('quiz-screen-active').innerHTML = `
+                    <div class="text-center py-8 space-y-4 animate-fade-in">
+                        <div class="w-20 h-20 bg-amber-100 dark:bg-amber-950 text-amber-500 rounded-3xl flex items-center justify-center text-4xl mx-auto border-2 border-amber-300 shadow-lg">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold font-display text-slate-900 dark:text-white">¡Quiz de Uruapan Concluido!</h3>
+                        <p class="text-slate-600 dark:text-slate-300 text-sm font-medium">Puntuación final: <strong class="text-blue-600 dark:text-blue-400 font-black text-lg">${quizScore} / 100 puntos</strong></p>
+                        <div class="pt-4">
+                            <button onclick="location.reload()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-xl shadow-lg cursor-pointer transition-transform active:scale-95">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Intentar Nuevamente
+                            </button>
+                        </div>
+                    </div>
+                `;
+                confetti({ particleCount: 100, spread: 100, origin: { y: 0.6 } });
+            }
+        };
+
+        // Initialize on load
+        window.onload = function() {
+            const savedTheme = localStorage.getItem('uruapanmath_2do_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fa-solid fa-sun text-base' : 'fa-solid fa-moon text-base';
+            renderTopicsGrid();
+        };
+    </script>
+</body>
+</html>
